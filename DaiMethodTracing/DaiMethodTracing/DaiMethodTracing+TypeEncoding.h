@@ -27,7 +27,14 @@ typedef enum {
     DaiMethodTracingTypeObject,
     DaiMethodTracingTypeClass,
     DaiMethodTracingTypeSelector,
-    DaiMethodTracingTypeUnknow
+    DaiMethodTracingTypeUnknow,
+    
+    DaiMethodTracingTypeCGRect,
+    DaiMethodTracingTypeCGPoint,
+    DaiMethodTracingTypeCGSize,
+    DaiMethodTracingTypeCGAffineTransform,
+    DaiMethodTracingTypeUIEdgeInsets,
+    DaiMethodTracingTypeUIOffset
 } DaiMethodTracingType;
 
 @interface DaiMethodTracing (TypeEncoding)

@@ -227,15 +227,78 @@ SEL selMethodIMP(id self, SEL _cmd, ...) {
     return returnValue;
 }
 
+CGRect cgRectMethodIMP(id self, SEL _cmd, ...) {
+    
+    createInvocation
+    setupInvocation
+    invocationInvoke
+    
+    CGRect returnValue;
+    [invocation getReturnValue:&returnValue];
+    return returnValue;
+}
+
+CGPoint cgPointMethodIMP(id self, SEL _cmd, ...) {
+    
+    createInvocation
+    setupInvocation
+    invocationInvoke
+    
+    CGPoint returnValue;
+    [invocation getReturnValue:&returnValue];
+    return returnValue;
+}
+
+CGSize cgSizeMethodIMP(id self, SEL _cmd, ...) {
+    
+    createInvocation
+    setupInvocation
+    invocationInvoke
+    
+    CGSize returnValue;
+    [invocation getReturnValue:&returnValue];
+    return returnValue;
+}
+
+CGAffineTransform cgAffineTransformMethodIMP(id self, SEL _cmd, ...) {
+    
+    createInvocation
+    setupInvocation
+    invocationInvoke
+    
+    CGAffineTransform returnValue;
+    [invocation getReturnValue:&returnValue];
+    return returnValue;
+}
+
+UIEdgeInsets uiEdgeInsetsMethodIMP(id self, SEL _cmd, ...) {
+    
+    createInvocation
+    setupInvocation
+    invocationInvoke
+    
+    UIEdgeInsets returnValue;
+    [invocation getReturnValue:&returnValue];
+    return returnValue;
+}
+
+UIOffset uiOffsetMethodIMP(id self, SEL _cmd, ...) {
+    
+    createInvocation
+    setupInvocation
+    invocationInvoke
+    
+    UIOffset returnValue;
+    [invocation getReturnValue:&returnValue];
+    return returnValue;
+}
+
 
 #pragma mark - private
 
 void addArguments(NSInvocation *invocation, va_list list) {
     
     for (NSUInteger i=2; i<[[invocation methodSignature] numberOfArguments]; i++) {
-        
-        NSLog(@"%@, %@", NSStringFromSelector([invocation selector]), [NSString stringWithCString:[[invocation methodSignature] getArgumentTypeAtIndex:i]
-                                                                                         encoding:NSUTF8StringEncoding]);
 
         switch (typeEncoding([NSString stringWithCString:[[invocation methodSignature] getArgumentTypeAtIndex:i]
                                                 encoding:NSUTF8StringEncoding])) {
@@ -341,8 +404,46 @@ void addArguments(NSInvocation *invocation, va_list list) {
                 [invocation setArgument:&argument atIndex:i];
                 break;
             }
-                
+            case DaiMethodTracingTypeCGRect:
+            {
+                CGRect argument = va_arg(list, CGRect);
+                [invocation setArgument:&argument atIndex:i];
+                break;
+            }
+            case DaiMethodTracingTypeCGPoint:
+            {
+                CGPoint argument = va_arg(list, CGPoint);
+                [invocation setArgument:&argument atIndex:i];
+                break;
+            }
+            case DaiMethodTracingTypeCGSize:
+            {
+                CGSize argument = va_arg(list, CGSize);
+                [invocation setArgument:&argument atIndex:i];
+                break;
+            }
+            case DaiMethodTracingTypeCGAffineTransform:
+            {
+                CGAffineTransform argument = va_arg(list, CGAffineTransform);
+                [invocation setArgument:&argument atIndex:i];
+                break;
+            }
+            case DaiMethodTracingTypeUIEdgeInsets:
+            {
+                UIEdgeInsets argument = va_arg(list, UIEdgeInsets);
+                [invocation setArgument:&argument atIndex:i];
+                break;
+            }
+            case DaiMethodTracingTypeUIOffset:
+            {
+                UIOffset argument = va_arg(list, UIOffset);
+                [invocation setArgument:&argument atIndex:i];
+                break;
+            }
+
             default:
+                NSLog(@"%@, %@", NSStringFromSelector([invocation selector]), [NSString stringWithCString:[[invocation methodSignature] getArgumentTypeAtIndex:i]
+                                                                                                 encoding:NSUTF8StringEncoding]);
                 break;
         }
         

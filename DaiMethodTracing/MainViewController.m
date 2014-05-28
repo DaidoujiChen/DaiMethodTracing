@@ -9,7 +9,6 @@
 #import "MainViewController.h"
 
 @interface MainViewController ()
-
 @end
 
 @implementation MainViewController
@@ -19,26 +18,21 @@
     [super didReceiveMemoryWarning];
 }
 
-typedef struct example {
-    char *aString;
-    int  anInt;
-} Example;
-
 #pragma mark - life cycle
 
 -(void) viewDidLoad {
     [super viewDidLoad];
     
     [DaiMethodTracing tracingClass:[self class]];
-    
-    Example test;
 
     [self testFunction:@"aa" test:0 block:^(bool success){
         NSLog(@"hello");
-    } struct:test];
+    }];
+    
+    [MainViewController testFunction4:@"hello"];
 }
 
--(void) testFunction : (NSString*) myString test : (char) aChar block : (void(^)(bool success)) block struct : (Example) astruct {
+-(void) testFunction : (NSString*) myString test : (char) aChar block : (void(^)(bool success)) block {
     block(YES);
     
     [self testFunction2];
@@ -50,6 +44,9 @@ typedef struct example {
 
 -(char) testFunction3 {
     return 0;
+}
+
++(void) testFunction4 : (NSString*) myString {
 }
 
 @end

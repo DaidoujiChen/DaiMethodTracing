@@ -12,44 +12,58 @@
 
 DaiMethodTracingType typeEncoding(NSString* type) {
     
-    if ([type isEqualToString:@"c"]) {
+    if (strncmp([type UTF8String], "c", 1) == 0) {
         return DaiMethodTracingTypeChar;
-    } else if ([type isEqualToString:@"i"]) {
+    } else if (strncmp([type UTF8String], "i", 1) == 0) {
         return DaiMethodTracingTypeInt;
-    } else if ([type isEqualToString:@"s"]) {
+    } else if (strncmp([type UTF8String], "s", 1) == 0) {
         return DaiMethodTracingTypeShort;
-    } else if ([type isEqualToString:@"l"]) {
+    } else if (strncmp([type UTF8String], "l", 1) == 0) {
         return DaiMethodTracingTypeLong;
-    } else if ([type isEqualToString:@"q"]) {
+    } else if (strncmp([type UTF8String], "q", 1) == 0) {
         return DaiMethodTracingTypeLongLong;
-    } else if ([type isEqualToString:@"C"]) {
+    } else if (strncmp([type UTF8String], "C", 1) == 0) {
         return DaiMethodTracingTypeUnsignedChar;
-    } else if ([type isEqualToString:@"I"]) {
+    } else if (strncmp([type UTF8String], "I", 1) == 0) {
         return DaiMethodTracingTypeUnsignedInt;
-    } else if ([type isEqualToString:@"S"]) {
+    } else if (strncmp([type UTF8String], "S", 1) == 0) {
         return DaiMethodTracingTypeUnsignedShort;
-    } else if ([type isEqualToString:@"L"]) {
+    } else if (strncmp([type UTF8String], "L", 1) == 0) {
         return DaiMethodTracingTypeUnsignedLong;
-    } else if ([type isEqualToString:@"Q"]) {
+    } else if (strncmp([type UTF8String], "Q", 1) == 0) {
         return DaiMethodTracingTypeUnsignedLongLong;
-    } else if ([type isEqualToString:@"f"]) {
+    } else if (strncmp([type UTF8String], "f", 1) == 0) {
         return DaiMethodTracingTypeFloat;
-    } else if ([type isEqualToString:@"d"]) {
+    } else if (strncmp([type UTF8String], "d", 1) == 0) {
         return DaiMethodTracingTypeDouble;
-    } else if ([type isEqualToString:@"B"]) {
+    } else if (strncmp([type UTF8String], "B", 1) == 0) {
         return DaiMethodTracingTypeBool;
-    } else if ([type isEqualToString:@"v"]) {
+    } else if (strncmp([type UTF8String], "v", 1) == 0) {
         return DaiMethodTracingTypeVoid;
-    } else if ([type isEqualToString:@"*"]) {
+    } else if (strncmp([type UTF8String], "*", 1) == 0) {
         return DaiMethodTracingTypeCharPointer;
-    } else if ([type isEqualToString:@"@"]) {
+    } else if (strncmp([type UTF8String], "@", 1) == 0) {
         return DaiMethodTracingTypeObject;
-    } else if ([type isEqualToString:@"#"]) {
+    } else if (strncmp([type UTF8String], "#", 1) == 0) {
         return DaiMethodTracingTypeClass;
-    } else if ([type isEqualToString:@":"]) {
+    } else if (strncmp([type UTF8String], ":", 1) == 0) {
         return DaiMethodTracingTypeSelector;
-    } else if ([type isEqualToString:@"?"]) {
+    } else if (strncmp([type UTF8String], "?", 1) == 0) {
         return DaiMethodTracingTypeUnknow;
+    }
+    //上面是比較基本的部分, 下面這些結構參考從 https://github.com/johnno1962/Xtrace
+    else if (strncmp([type UTF8String], "{CGRect=", 8) == 0) {
+        return DaiMethodTracingTypeCGRect;
+    } else if (strncmp([type UTF8String], "{CGPoint=", 9) == 0) {
+        return DaiMethodTracingTypeCGPoint;
+    } else if (strncmp([type UTF8String], "{CGSize=", 8) == 0) {
+        return DaiMethodTracingTypeCGSize;
+    } else if (strncmp([type UTF8String], "{CGAffineTransform=", 19) == 0) {
+        return DaiMethodTracingTypeCGAffineTransform;
+    } else if (strncmp([type UTF8String], "{UIEdgeInsets=", 14) == 0) {
+        return DaiMethodTracingTypeUIEdgeInsets;
+    } else if (strncmp([type UTF8String], "{UIOffset=", 10) == 0) {
+        return DaiMethodTracingTypeUIOffset;
     }
     
     return -1;

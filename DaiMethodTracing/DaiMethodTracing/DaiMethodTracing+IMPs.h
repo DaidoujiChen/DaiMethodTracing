@@ -29,4 +29,11 @@ id idMethodIMP(id self, SEL _cmd, ...);
 Class classMethodIMP(id self, SEL _cmd, ...);
 SEL selMethodIMP(id self, SEL _cmd, ...);
 
+CGRect cgRectMethodIMP(id self, SEL _cmd, ...);
+CGPoint cgPointMethodIMP(id self, SEL _cmd, ...);
+CGSize cgSizeMethodIMP(id self, SEL _cmd, ...);
+CGAffineTransform cgAffineTransformMethodIMP(id self, SEL _cmd, ...);
+UIEdgeInsets uiEdgeInsetsMethodIMP(id self, SEL _cmd, ...);
+UIOffset uiOffsetMethodIMP(id self, SEL _cmd, ...);
+
 @end
