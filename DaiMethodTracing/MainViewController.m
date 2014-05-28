@@ -35,11 +35,11 @@
 -(void) testFunction : (NSString*) myString test : (char) aChar block : (void(^)(bool success)) block {
     block(YES);
     
-    [self testFunction2];
+    NSLog(@"%@", [self testFunction2]);
 }
 
 -(NSArray*) testFunction2 {
-    return nil;
+    return @[@"daidouji", @"chen"];
 }
 
 -(char) testFunction3 {
