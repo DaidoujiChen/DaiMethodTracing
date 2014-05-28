@@ -13,6 +13,12 @@
 #import "DaiMethodTracing+IMPs.h"
 #import "DaiMethodTracing+TypeEncoding.h"
 
+#define addMethodUsingIMP(arg1, arg2)\
+class_addMethod(arg1,\
+NSSelectorFromString(swizzlingMethodName),\
+(IMP) arg2,\
+method_getTypeEncoding(methodList[i]));
+
 @implementation DaiMethodTracing
 
 +(void) tracingClass : (Class) aClass {
@@ -41,148 +47,76 @@
         //add method
         switch (returnType) {
             case DaiMethodTracingTypeChar:
-                class_addMethod(metaClass,
-                                NSSelectorFromString(swizzlingMethodName),
-                                (IMP) charMethodIMP,
-                                method_getTypeEncoding(methodList[i]));
+                addMethodUsingIMP(metaClass, charMethodIMP)
                 break;
             case DaiMethodTracingTypeInt:
-                class_addMethod(metaClass,
-                                NSSelectorFromString(swizzlingMethodName),
-                                (IMP) intMethodIMP,
-                                method_getTypeEncoding(methodList[i]));
+                addMethodUsingIMP(metaClass, intMethodIMP)
                 break;
             case DaiMethodTracingTypeShort:
-                class_addMethod(metaClass,
-                                NSSelectorFromString(swizzlingMethodName),
-                                (IMP) shortMethodIMP,
-                                method_getTypeEncoding(methodList[i]));
+                addMethodUsingIMP(metaClass, shortMethodIMP)
                 break;
             case DaiMethodTracingTypeLong:
-                class_addMethod(metaClass,
-                                NSSelectorFromString(swizzlingMethodName),
-                                (IMP) longMethodIMP,
-                                method_getTypeEncoding(methodList[i]));
+                addMethodUsingIMP(metaClass, longMethodIMP)
                 break;
             case DaiMethodTracingTypeLongLong:
-                class_addMethod(metaClass,
-                                NSSelectorFromString(swizzlingMethodName),
-                                (IMP) longlongMethodIMP,
-                                method_getTypeEncoding(methodList[i]));
+                addMethodUsingIMP(metaClass, longlongMethodIMP)
                 break;
             case DaiMethodTracingTypeUnsignedChar:
-                class_addMethod(metaClass,
-                                NSSelectorFromString(swizzlingMethodName),
-                                (IMP) unsignedCharMethodIMP,
-                                method_getTypeEncoding(methodList[i]));
+                addMethodUsingIMP(metaClass, unsignedCharMethodIMP)
                 break;
             case DaiMethodTracingTypeUnsignedInt:
-                class_addMethod(metaClass,
-                                NSSelectorFromString(swizzlingMethodName),
-                                (IMP) unsignedIntMethodIMP,
-                                method_getTypeEncoding(methodList[i]));
+                addMethodUsingIMP(metaClass, unsignedIntMethodIMP)
                 break;
             case DaiMethodTracingTypeUnsignedShort:
-                class_addMethod(metaClass,
-                                NSSelectorFromString(swizzlingMethodName),
-                                (IMP) unsignedShortMethodIMP,
-                                method_getTypeEncoding(methodList[i]));
+                addMethodUsingIMP(metaClass, unsignedShortMethodIMP)
                 break;
             case DaiMethodTracingTypeUnsignedLong:
-                class_addMethod(metaClass,
-                                NSSelectorFromString(swizzlingMethodName),
-                                (IMP) unsignedLongMethodIMP,
-                                method_getTypeEncoding(methodList[i]));
+                addMethodUsingIMP(metaClass, unsignedLongMethodIMP)
                 break;
             case DaiMethodTracingTypeUnsignedLongLong:
-                class_addMethod(metaClass,
-                                NSSelectorFromString(swizzlingMethodName),
-                                (IMP) unsignedLongLongMethodIMP,
-                                method_getTypeEncoding(methodList[i]));
+                addMethodUsingIMP(metaClass, unsignedLongLongMethodIMP)
                 break;
             case DaiMethodTracingTypeFloat:
-                class_addMethod(metaClass,
-                                NSSelectorFromString(swizzlingMethodName),
-                                (IMP) floatMethodIMP,
-                                method_getTypeEncoding(methodList[i]));
+                addMethodUsingIMP(metaClass, floatMethodIMP)
                 break;
             case DaiMethodTracingTypeDouble:
-                class_addMethod(metaClass,
-                                NSSelectorFromString(swizzlingMethodName),
-                                (IMP) doubleMethodIMP,
-                                method_getTypeEncoding(methodList[i]));
+                addMethodUsingIMP(metaClass, doubleMethodIMP)
                 break;
             case DaiMethodTracingTypeBool:
-                class_addMethod(metaClass,
-                                NSSelectorFromString(swizzlingMethodName),
-                                (IMP) boolMethodIMP,
-                                method_getTypeEncoding(methodList[i]));
+                addMethodUsingIMP(metaClass, boolMethodIMP)
                 break;
             case DaiMethodTracingTypeVoid:
-                class_addMethod(metaClass,
-                                NSSelectorFromString(swizzlingMethodName),
-                                (IMP) voidMethodIMP,
-                                method_getTypeEncoding(methodList[i]));
+                addMethodUsingIMP(metaClass, voidMethodIMP)
                 break;
             case DaiMethodTracingTypeCharPointer:
-                class_addMethod(metaClass,
-                                NSSelectorFromString(swizzlingMethodName),
-                                (IMP) charPointerMethodIMP,
-                                method_getTypeEncoding(methodList[i]));
+                addMethodUsingIMP(metaClass, charPointerMethodIMP)
                 break;
             case DaiMethodTracingTypeObject:
-                class_addMethod(metaClass,
-                                NSSelectorFromString(swizzlingMethodName),
-                                (IMP) idMethodIMP,
-                                method_getTypeEncoding(methodList[i]));
+                addMethodUsingIMP(metaClass, idMethodIMP)
                 break;
             case DaiMethodTracingTypeClass:
-                class_addMethod(metaClass,
-                                NSSelectorFromString(swizzlingMethodName),
-                                (IMP) classMethodIMP,
-                                method_getTypeEncoding(methodList[i]));
+                addMethodUsingIMP(metaClass, classMethodIMP)
                 break;
             case DaiMethodTracingTypeSelector:
-                class_addMethod(metaClass,
-                                NSSelectorFromString(swizzlingMethodName),
-                                (IMP) selMethodIMP,
-                                method_getTypeEncoding(methodList[i]));
+                addMethodUsingIMP(metaClass, selMethodIMP)
                 break;
             case DaiMethodTracingTypeCGRect:
-                class_addMethod(metaClass,
-                                NSSelectorFromString(swizzlingMethodName),
-                                (IMP) cgRectMethodIMP,
-                                method_getTypeEncoding(methodList[i]));
+                addMethodUsingIMP(metaClass, cgRectMethodIMP)
                 break;
             case DaiMethodTracingTypeCGPoint:
-                class_addMethod(metaClass,
-                                NSSelectorFromString(swizzlingMethodName),
-                                (IMP) cgPointMethodIMP,
-                                method_getTypeEncoding(methodList[i]));
+                addMethodUsingIMP(metaClass, cgPointMethodIMP)
                 break;
             case DaiMethodTracingTypeCGSize:
-                class_addMethod(metaClass,
-                                NSSelectorFromString(swizzlingMethodName),
-                                (IMP) cgSizeMethodIMP,
-                                method_getTypeEncoding(methodList[i]));
+                addMethodUsingIMP(metaClass, cgSizeMethodIMP)
                 break;
             case DaiMethodTracingTypeCGAffineTransform:
-                class_addMethod(metaClass,
-                                NSSelectorFromString(swizzlingMethodName),
-                                (IMP) cgAffineTransformMethodIMP,
-                                method_getTypeEncoding(methodList[i]));
+                addMethodUsingIMP(metaClass, cgAffineTransformMethodIMP)
                 break;
             case DaiMethodTracingTypeUIEdgeInsets:
-                class_addMethod(metaClass,
-                                NSSelectorFromString(swizzlingMethodName),
-                                (IMP) uiEdgeInsetsMethodIMP,
-                                method_getTypeEncoding(methodList[i]));
+                addMethodUsingIMP(metaClass, uiEdgeInsetsMethodIMP)
                 break;
             case DaiMethodTracingTypeUIOffset:
-                class_addMethod(metaClass,
-                                NSSelectorFromString(swizzlingMethodName),
-                                (IMP) uiOffsetMethodIMP,
-                                method_getTypeEncoding(methodList[i]));
+                addMethodUsingIMP(metaClass, uiOffsetMethodIMP)
                 break;
             default:
                 break;
@@ -214,148 +148,76 @@
         //add method
         switch (returnType) {
             case DaiMethodTracingTypeChar:
-                class_addMethod(aClass,
-                                NSSelectorFromString(swizzlingMethodName),
-                                (IMP) charMethodIMP,
-                                method_getTypeEncoding(methodList[i]));
+                addMethodUsingIMP(aClass, charMethodIMP)
                 break;
             case DaiMethodTracingTypeInt:
-                class_addMethod(aClass,
-                                NSSelectorFromString(swizzlingMethodName),
-                                (IMP) intMethodIMP,
-                                method_getTypeEncoding(methodList[i]));
+                addMethodUsingIMP(aClass, intMethodIMP)
                 break;
             case DaiMethodTracingTypeShort:
-                class_addMethod(aClass,
-                                NSSelectorFromString(swizzlingMethodName),
-                                (IMP) shortMethodIMP,
-                                method_getTypeEncoding(methodList[i]));
+                addMethodUsingIMP(aClass, shortMethodIMP)
                 break;
             case DaiMethodTracingTypeLong:
-                class_addMethod(aClass,
-                                NSSelectorFromString(swizzlingMethodName),
-                                (IMP) longMethodIMP,
-                                method_getTypeEncoding(methodList[i]));
+                addMethodUsingIMP(aClass, longMethodIMP)
                 break;
             case DaiMethodTracingTypeLongLong:
-                class_addMethod(aClass,
-                                NSSelectorFromString(swizzlingMethodName),
-                                (IMP) longlongMethodIMP,
-                                method_getTypeEncoding(methodList[i]));
+                addMethodUsingIMP(aClass, longlongMethodIMP)
                 break;
             case DaiMethodTracingTypeUnsignedChar:
-                class_addMethod(aClass,
-                                NSSelectorFromString(swizzlingMethodName),
-                                (IMP) unsignedCharMethodIMP,
-                                method_getTypeEncoding(methodList[i]));
+                addMethodUsingIMP(aClass, unsignedCharMethodIMP)
                 break;
             case DaiMethodTracingTypeUnsignedInt:
-                class_addMethod(aClass,
-                                NSSelectorFromString(swizzlingMethodName),
-                                (IMP) unsignedIntMethodIMP,
-                                method_getTypeEncoding(methodList[i]));
+                addMethodUsingIMP(aClass, unsignedIntMethodIMP)
                 break;
             case DaiMethodTracingTypeUnsignedShort:
-                class_addMethod(aClass,
-                                NSSelectorFromString(swizzlingMethodName),
-                                (IMP) unsignedShortMethodIMP,
-                                method_getTypeEncoding(methodList[i]));
+                addMethodUsingIMP(aClass, unsignedShortMethodIMP)
                 break;
             case DaiMethodTracingTypeUnsignedLong:
-                class_addMethod(aClass,
-                                NSSelectorFromString(swizzlingMethodName),
-                                (IMP) unsignedLongMethodIMP,
-                                method_getTypeEncoding(methodList[i]));
+                addMethodUsingIMP(aClass, unsignedLongMethodIMP)
                 break;
             case DaiMethodTracingTypeUnsignedLongLong:
-                class_addMethod(aClass,
-                                NSSelectorFromString(swizzlingMethodName),
-                                (IMP) unsignedLongLongMethodIMP,
-                                method_getTypeEncoding(methodList[i]));
+                addMethodUsingIMP(aClass, unsignedLongLongMethodIMP)
                 break;
             case DaiMethodTracingTypeFloat:
-                class_addMethod(aClass,
-                                NSSelectorFromString(swizzlingMethodName),
-                                (IMP) floatMethodIMP,
-                                method_getTypeEncoding(methodList[i]));
+                addMethodUsingIMP(aClass, floatMethodIMP)
                 break;
             case DaiMethodTracingTypeDouble:
-                class_addMethod(aClass,
-                                NSSelectorFromString(swizzlingMethodName),
-                                (IMP) doubleMethodIMP,
-                                method_getTypeEncoding(methodList[i]));
+                addMethodUsingIMP(aClass, doubleMethodIMP)
                 break;
             case DaiMethodTracingTypeBool:
-                class_addMethod(aClass,
-                                NSSelectorFromString(swizzlingMethodName),
-                                (IMP) boolMethodIMP,
-                                method_getTypeEncoding(methodList[i]));
+                addMethodUsingIMP(aClass, boolMethodIMP)
                 break;
             case DaiMethodTracingTypeVoid:
-                class_addMethod(aClass,
-                                NSSelectorFromString(swizzlingMethodName),
-                                (IMP) voidMethodIMP,
-                                method_getTypeEncoding(methodList[i]));
+                addMethodUsingIMP(aClass, voidMethodIMP)
                 break;
             case DaiMethodTracingTypeCharPointer:
-                class_addMethod(aClass,
-                                NSSelectorFromString(swizzlingMethodName),
-                                (IMP) charPointerMethodIMP,
-                                method_getTypeEncoding(methodList[i]));
+                addMethodUsingIMP(aClass, charPointerMethodIMP)
                 break;
             case DaiMethodTracingTypeObject:
-                class_addMethod(aClass,
-                                NSSelectorFromString(swizzlingMethodName),
-                                (IMP) idMethodIMP,
-                                method_getTypeEncoding(methodList[i]));
+                addMethodUsingIMP(aClass, idMethodIMP)
                 break;
             case DaiMethodTracingTypeClass:
-                class_addMethod(aClass,
-                                NSSelectorFromString(swizzlingMethodName),
-                                (IMP) classMethodIMP,
-                                method_getTypeEncoding(methodList[i]));
+                addMethodUsingIMP(aClass, classMethodIMP)
                 break;
             case DaiMethodTracingTypeSelector:
-                class_addMethod(aClass,
-                                NSSelectorFromString(swizzlingMethodName),
-                                (IMP) selMethodIMP,
-                                method_getTypeEncoding(methodList[i]));
+                addMethodUsingIMP(aClass, selMethodIMP)
                 break;
             case DaiMethodTracingTypeCGRect:
-                class_addMethod(aClass,
-                                NSSelectorFromString(swizzlingMethodName),
-                                (IMP) cgRectMethodIMP,
-                                method_getTypeEncoding(methodList[i]));
+                addMethodUsingIMP(aClass, cgRectMethodIMP)
                 break;
             case DaiMethodTracingTypeCGPoint:
-                class_addMethod(aClass,
-                                NSSelectorFromString(swizzlingMethodName),
-                                (IMP) cgPointMethodIMP,
-                                method_getTypeEncoding(methodList[i]));
+                addMethodUsingIMP(aClass, cgPointMethodIMP)
                 break;
             case DaiMethodTracingTypeCGSize:
-                class_addMethod(aClass,
-                                NSSelectorFromString(swizzlingMethodName),
-                                (IMP) cgSizeMethodIMP,
-                                method_getTypeEncoding(methodList[i]));
+                addMethodUsingIMP(aClass, cgSizeMethodIMP)
                 break;
             case DaiMethodTracingTypeCGAffineTransform:
-                class_addMethod(aClass,
-                                NSSelectorFromString(swizzlingMethodName),
-                                (IMP) cgAffineTransformMethodIMP,
-                                method_getTypeEncoding(methodList[i]));
+                addMethodUsingIMP(aClass, cgAffineTransformMethodIMP)
                 break;
             case DaiMethodTracingTypeUIEdgeInsets:
-                class_addMethod(aClass,
-                                NSSelectorFromString(swizzlingMethodName),
-                                (IMP) uiEdgeInsetsMethodIMP,
-                                method_getTypeEncoding(methodList[i]));
+                addMethodUsingIMP(aClass, uiEdgeInsetsMethodIMP)
                 break;
             case DaiMethodTracingTypeUIOffset:
-                class_addMethod(aClass,
-                                NSSelectorFromString(swizzlingMethodName),
-                                (IMP) uiOffsetMethodIMP,
-                                method_getTypeEncoding(methodList[i]));
+                addMethodUsingIMP(aClass, uiOffsetMethodIMP)
                 break;
             default:
                 break;
