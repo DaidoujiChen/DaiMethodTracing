@@ -200,7 +200,7 @@ id idMethodIMP(id self, SEL _cmd, ...) {
     setupInvocation
     invocationInvoke
     
-    id returnValue;
+    __unsafe_unretained id returnValue;
     [invocation getReturnValue:&returnValue];
     return returnValue;
 }
