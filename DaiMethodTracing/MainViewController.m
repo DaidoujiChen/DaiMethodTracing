@@ -18,19 +18,37 @@
     [super didReceiveMemoryWarning];
 }
 
+#pragma mark - ibaction
+
+- (IBAction)testAction:(id)sender {
+    
+    switch (arc4random()%4) {
+        case 0:
+            [self testFunction:@"aa" test:0 block:^(bool success){
+                NSLog(@"hello");
+            }];
+            break;
+        case 1:
+            [self testFunction3];
+            break;
+        case 2:
+            [MainViewController testFunction4:@"hello"];
+            break;
+        case 3:
+            [MainViewController testFunction5];
+            break;
+        default:
+            break;
+    }
+    
+}
+
+
 #pragma mark - life cycle
 
 -(void) viewDidLoad {
     [super viewDidLoad];
-    
     [DaiMethodTracing tracingClass:[self class]];
-
-    [self testFunction:@"aa" test:0 block:^(bool success){
-        NSLog(@"hello");
-    }];
-    
-    [MainViewController testFunction4:@"hello"];
-    [MainViewController testFunction5];
 }
 
 -(void) testFunction : (NSString*) myString test : (char) aChar block : (void(^)(bool success)) block {
