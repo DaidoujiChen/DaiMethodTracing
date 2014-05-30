@@ -30,12 +30,13 @@
     }];
     
     [MainViewController testFunction4:@"hello"];
+    [MainViewController testFunction5];
 }
 
 -(void) testFunction : (NSString*) myString test : (char) aChar block : (void(^)(bool success)) block {
     block(YES);
     
-    NSLog(@"%@", [self testFunction2]);
+    [self testFunction2];
 }
 
 -(NSArray*) testFunction2 {
@@ -47,6 +48,10 @@
 }
 
 +(void) testFunction4 : (NSString*) myString {
+}
+
++(CGPoint) testFunction5 {
+    return CGPointMake(0, 0);
 }
 
 @end
