@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		019E25471936CDC200CF0A3E /* DaiMethodTracing+AccessObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 019E25461936CDC200CF0A3E /* DaiMethodTracing+AccessObject.m */; };
 		01A40AA1193441D700C55CB0 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01A40AA0193441D700C55CB0 /* Foundation.framework */; };
 		01A40AA3193441D700C55CB0 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01A40AA2193441D700C55CB0 /* CoreGraphics.framework */; };
 		01A40AA5193441D700C55CB0 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01A40AA4193441D700C55CB0 /* UIKit.framework */; };
@@ -37,6 +38,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		019E25451936CDC200CF0A3E /* DaiMethodTracing+AccessObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "DaiMethodTracing+AccessObject.h"; path = "DaiMethodTracing/DaiMethodTracing+AccessObject.h"; sourceTree = "<group>"; };
+		019E25461936CDC200CF0A3E /* DaiMethodTracing+AccessObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "DaiMethodTracing+AccessObject.m"; path = "DaiMethodTracing/DaiMethodTracing+AccessObject.m"; sourceTree = "<group>"; };
 		01A40A9D193441D700C55CB0 /* DaiMethodTracing.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DaiMethodTracing.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		01A40AA0193441D700C55CB0 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		01A40AA2193441D700C55CB0 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -167,6 +170,8 @@
 			children = (
 				01A40ADB1934432800C55CB0 /* DaiMethodTracing.h */,
 				01A40ADC1934432800C55CB0 /* DaiMethodTracing.m */,
+				019E25451936CDC200CF0A3E /* DaiMethodTracing+AccessObject.h */,
+				019E25461936CDC200CF0A3E /* DaiMethodTracing+AccessObject.m */,
 				01A40ADE1934461400C55CB0 /* DaiMethodTracing+IMPs.h */,
 				01A40ADF1934461400C55CB0 /* DaiMethodTracing+IMPs.m */,
 				01A40AE11934659F00C55CB0 /* DaiMethodTracing+TypeEncoding.h */,
@@ -276,6 +281,7 @@
 				01A40AE31934659F00C55CB0 /* DaiMethodTracing+TypeEncoding.m in Sources */,
 				01A40AB1193441D700C55CB0 /* AppDelegate.m in Sources */,
 				01A40AD81934421000C55CB0 /* MainViewController.m in Sources */,
+				019E25471936CDC200CF0A3E /* DaiMethodTracing+AccessObject.m in Sources */,
 				01A40AAD193441D700C55CB0 /* main.m in Sources */,
 				01A40AE01934461400C55CB0 /* DaiMethodTracing+IMPs.m in Sources */,
 			);
@@ -474,6 +480,7 @@
 				01A40AD1193441D700C55CB0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		01A40AD2193441D700C55CB0 /* Build configuration list for PBXNativeTarget "DaiMethodTracingTests" */ = {
 			isa = XCConfigurationList;
@@ -482,6 +489,7 @@
 				01A40AD4193441D700C55CB0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
