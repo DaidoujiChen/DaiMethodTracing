@@ -11,11 +11,11 @@
 #import <objc/runtime.h>
 
 #import "DaiMethodTracing+TypeEncoding.h"
-#import "DaiMethodTracing+AccessObject.h"
+#import "NSObject+MethodDeep.h"
 
 #define createInvocation \
-incDeep;\
-NSLog(@"(%lu)> start %@ at %@", (unsigned long)deep, self, NSStringFromSelector(_cmd));\
+[self incDeep];\
+NSLog(@"(%lu)> start %@ at %@", (unsigned long)[self deep], self, NSStringFromSelector(_cmd));\
 NSTimeInterval startTime = [[NSDate date] timeIntervalSince1970];\
 NSString *methodName = NSStringFromSelector(_cmd);\
 NSMethodSignature *signature = [self methodSignatureForSelector:NSSelectorFromString([NSString stringWithFormat:@"%@%@", swizzlingPrefix, methodName])];\
@@ -31,7 +31,7 @@ va_end(list);
 
 #define invocationInvoke \
 [invocation invoke];\
-NSLog(@"(%lu)> finish %@ at %@, use %fs", (unsigned long)deep, self, NSStringFromSelector(_cmd), [[NSDate date] timeIntervalSince1970] - startTime);
+NSLog(@"(%lu)> finish %@ at %@, use %fs", (unsigned long)[self deep], self, NSStringFromSelector(_cmd), [[NSDate date] timeIntervalSince1970] - startTime);
 
 @implementation DaiMethodTracing (IMPs)
 
@@ -43,8 +43,8 @@ char charMethodIMP(id self, SEL _cmd, ...) {
     
     char returnValue;
     [invocation getReturnValue:&returnValue];
-    NSLog(@"(%lu)> return %c", (unsigned long)deep, returnValue);
-    decDeep;
+    NSLog(@"(%lu)> return %c", (unsigned long)[self deep], returnValue);
+    [self decDeep];
     return returnValue;
 }
 
@@ -56,8 +56,8 @@ int intMethodIMP(id self, SEL _cmd, ...) {
     
     int returnValue;
     [invocation getReturnValue:&returnValue];
-    NSLog(@"(%lu)> return %i", (unsigned long)deep, returnValue);
-    decDeep;
+    NSLog(@"(%lu)> return %i", (unsigned long)[self deep], returnValue);
+    [self decDeep];
     return returnValue;
 }
 
@@ -69,8 +69,8 @@ short shortMethodIMP(id self, SEL _cmd, ...) {
     
     short returnValue;
     [invocation getReturnValue:&returnValue];
-    NSLog(@"(%lu)> return %i", (unsigned long)deep, returnValue);
-    decDeep;
+    NSLog(@"(%lu)> return %i", (unsigned long)[self deep], returnValue);
+    [self decDeep];
     return returnValue;
 }
 
@@ -82,8 +82,8 @@ long longMethodIMP(id self, SEL _cmd, ...) {
     
     long returnValue;
     [invocation getReturnValue:&returnValue];
-    NSLog(@"(%lu)> return %ld", (unsigned long)deep, returnValue);
-    decDeep;
+    NSLog(@"(%lu)> return %ld", (unsigned long)[self deep], returnValue);
+    [self decDeep];
     return returnValue;
 }
 
@@ -95,8 +95,8 @@ long long longlongMethodIMP(id self, SEL _cmd, ...) {
     
     long long returnValue;
     [invocation getReturnValue:&returnValue];
-    NSLog(@"(%lu)> return %lld", (unsigned long)deep, returnValue);
-    decDeep;
+    NSLog(@"(%lu)> return %lld", (unsigned long)[self deep], returnValue);
+    [self decDeep];
     return returnValue;
 }
 
@@ -108,8 +108,8 @@ unsigned char unsignedCharMethodIMP(id self, SEL _cmd, ...) {
     
     unsigned char returnValue;
     [invocation getReturnValue:&returnValue];
-    NSLog(@"(%lu)> return %c", (unsigned long)deep, returnValue);
-    decDeep;
+    NSLog(@"(%lu)> return %c", (unsigned long)[self deep], returnValue);
+    [self decDeep];
     return returnValue;
 }
 
@@ -121,8 +121,8 @@ unsigned int unsignedIntMethodIMP(id self, SEL _cmd, ...) {
     
     unsigned int returnValue;
     [invocation getReturnValue:&returnValue];
-    NSLog(@"(%lu)> return %i", (unsigned long)deep, returnValue);
-    decDeep;
+    NSLog(@"(%lu)> return %i", (unsigned long)[self deep], returnValue);
+    [self decDeep];
     return returnValue;
 }
 
@@ -134,8 +134,8 @@ unsigned short unsignedShortMethodIMP(id self, SEL _cmd, ...) {
     
     unsigned short returnValue;
     [invocation getReturnValue:&returnValue];
-    NSLog(@"(%lu)> return %i", (unsigned long)deep, returnValue);
-    decDeep;
+    NSLog(@"(%lu)> return %i", (unsigned long)[self deep], returnValue);
+    [self decDeep];
     return returnValue;
 }
 
@@ -147,8 +147,8 @@ unsigned long unsignedLongMethodIMP(id self, SEL _cmd, ...) {
     
     unsigned long returnValue;
     [invocation getReturnValue:&returnValue];
-    NSLog(@"(%lu)> return %lu", (unsigned long)deep, returnValue);
-    decDeep;
+    NSLog(@"(%lu)> return %lu", (unsigned long)[self deep], returnValue);
+    [self decDeep];
     return returnValue;
 }
 
@@ -160,8 +160,8 @@ unsigned long long unsignedLongLongMethodIMP(id self, SEL _cmd, ...) {
     
     unsigned long long returnValue;
     [invocation getReturnValue:&returnValue];
-    NSLog(@"(%lu)> return %llu", (unsigned long)deep, returnValue);
-    decDeep;
+    NSLog(@"(%lu)> return %llu", (unsigned long)[self deep], returnValue);
+    [self decDeep];
     return returnValue;
 }
 
@@ -173,8 +173,8 @@ float floatMethodIMP(id self, SEL _cmd, ...) {
     
     float returnValue;
     [invocation getReturnValue:&returnValue];
-    NSLog(@"(%lu)> return %f", (unsigned long)deep, returnValue);
-    decDeep;
+    NSLog(@"(%lu)> return %f", (unsigned long)[self deep], returnValue);
+    [self decDeep];
     return returnValue;
 }
 
@@ -186,8 +186,8 @@ double doubleMethodIMP(id self, SEL _cmd, ...) {
     
     double returnValue;
     [invocation getReturnValue:&returnValue];
-    NSLog(@"(%lu)> return %f", (unsigned long)deep, returnValue);
-    decDeep;
+    NSLog(@"(%lu)> return %f", (unsigned long)[self deep], returnValue);
+    [self decDeep];
     return returnValue;
 }
 
@@ -199,8 +199,8 @@ BOOL boolMethodIMP(id self, SEL _cmd, ...) {
     
     BOOL returnValue;
     [invocation getReturnValue:&returnValue];
-    NSLog(@"(%lu)> return %@", (unsigned long)deep, returnValue?@"YES":@"NO");
-    decDeep;
+    NSLog(@"(%lu)> return %@", (unsigned long)[self deep], returnValue?@"YES":@"NO");
+    [self decDeep];
     return returnValue;
 }
 
@@ -209,7 +209,7 @@ void voidMethodIMP(id self, SEL _cmd, ...) {
     createInvocation
     setupInvocation
     invocationInvoke
-    decDeep;
+    [self decDeep];
 }
 
 char* charPointerMethodIMP(id self, SEL _cmd, ...) {
@@ -220,8 +220,8 @@ char* charPointerMethodIMP(id self, SEL _cmd, ...) {
     
     char* returnValue;
     [invocation getReturnValue:&returnValue];
-    NSLog(@"(%lu)> return %s", (unsigned long)deep, returnValue);
-    decDeep;
+    NSLog(@"(%lu)> return %s", (unsigned long)[self deep], returnValue);
+    [self decDeep];
     return returnValue;
 }
 
@@ -233,8 +233,8 @@ id idMethodIMP(id self, SEL _cmd, ...) {
     
     __unsafe_unretained id returnValue;
     [invocation getReturnValue:&returnValue];
-    NSLog(@"(%lu)> return %@", (unsigned long)deep, returnValue);
-    decDeep;
+    NSLog(@"(%lu)> return %@", (unsigned long)[self deep], returnValue);
+    [self decDeep];
     return returnValue;
 }
 
@@ -246,8 +246,8 @@ Class classMethodIMP(id self, SEL _cmd, ...) {
     
     Class returnValue;
     [invocation getReturnValue:&returnValue];
-    NSLog(@"(%lu)> return %@", (unsigned long)deep, returnValue);
-    decDeep;
+    NSLog(@"(%lu)> return %@", (unsigned long)[self deep], returnValue);
+    [self decDeep];
     return returnValue;
 }
 
@@ -259,8 +259,8 @@ SEL selMethodIMP(id self, SEL _cmd, ...) {
     
     SEL returnValue;
     [invocation getReturnValue:&returnValue];
-    NSLog(@"(%lu)> return %@", (unsigned long)deep, NSStringFromSelector(returnValue));
-    decDeep;
+    NSLog(@"(%lu)> return %@", (unsigned long)[self deep], NSStringFromSelector(returnValue));
+    [self decDeep];
     return returnValue;
 }
 
@@ -272,8 +272,8 @@ CGRect cgRectMethodIMP(id self, SEL _cmd, ...) {
     
     CGRect returnValue;
     [invocation getReturnValue:&returnValue];
-    NSLog(@"(%lu)> return %@", (unsigned long)deep, NSStringFromCGRect(returnValue));
-    decDeep;
+    NSLog(@"(%lu)> return %@", (unsigned long)[self deep], NSStringFromCGRect(returnValue));
+    [self decDeep];
     return returnValue;
 }
 
@@ -285,8 +285,8 @@ CGPoint cgPointMethodIMP(id self, SEL _cmd, ...) {
     
     CGPoint returnValue;
     [invocation getReturnValue:&returnValue];
-    NSLog(@"(%lu)> return %@", (unsigned long)deep, NSStringFromCGPoint(returnValue));
-    decDeep;
+    NSLog(@"(%lu)> return %@", (unsigned long)[self deep], NSStringFromCGPoint(returnValue));
+    [self decDeep];
     return returnValue;
 }
 
@@ -298,8 +298,8 @@ CGSize cgSizeMethodIMP(id self, SEL _cmd, ...) {
     
     CGSize returnValue;
     [invocation getReturnValue:&returnValue];
-    NSLog(@"(%lu)> return %@", (unsigned long)deep, NSStringFromCGSize(returnValue));
-    decDeep;
+    NSLog(@"(%lu)> return %@", (unsigned long)[self deep], NSStringFromCGSize(returnValue));
+    [self decDeep];
     return returnValue;
 }
 
@@ -311,8 +311,8 @@ CGAffineTransform cgAffineTransformMethodIMP(id self, SEL _cmd, ...) {
     
     CGAffineTransform returnValue;
     [invocation getReturnValue:&returnValue];
-    NSLog(@"(%lu)> return %@", (unsigned long)deep, NSStringFromCGAffineTransform(returnValue));
-    decDeep;
+    NSLog(@"(%lu)> return %@", (unsigned long)[self deep], NSStringFromCGAffineTransform(returnValue));
+    [self decDeep];
     return returnValue;
 }
 
@@ -324,8 +324,8 @@ UIEdgeInsets uiEdgeInsetsMethodIMP(id self, SEL _cmd, ...) {
     
     UIEdgeInsets returnValue;
     [invocation getReturnValue:&returnValue];
-    NSLog(@"(%lu)> return %@", (unsigned long)deep, NSStringFromUIEdgeInsets(returnValue));
-    decDeep;
+    NSLog(@"(%lu)> return %@", (unsigned long)[self deep], NSStringFromUIEdgeInsets(returnValue));
+    [self decDeep];
     return returnValue;
 }
 
@@ -337,8 +337,8 @@ UIOffset uiOffsetMethodIMP(id self, SEL _cmd, ...) {
     
     UIOffset returnValue;
     [invocation getReturnValue:&returnValue];
-    NSLog(@"(%lu)> return %@", (unsigned long)deep, NSStringFromUIOffset(returnValue));
-    decDeep;
+    NSLog(@"(%lu)> return %@", (unsigned long)[self deep], NSStringFromUIOffset(returnValue));
+    [self decDeep];
     return returnValue;
 }
 
@@ -351,7 +351,7 @@ void addArguments(NSInvocation *invocation, va_list list) {
         
         NSMutableString *argumentLogString = [NSMutableString string];
         
-        [argumentLogString appendFormat:@"(%lu)> ", (unsigned long)deep];
+        [argumentLogString appendFormat:@"(%lu)> ", (unsigned long)[invocation.target deep]];
 
         switch (typeEncoding([NSString stringWithCString:[[invocation methodSignature] getArgumentTypeAtIndex:i]
                                                 encoding:NSUTF8StringEncoding])) {

@@ -1,25 +1,35 @@
 //
-//  DaiMethodTracing+AccessObject.m
+//  NSObject+MethodDeep.m
 //  DaiMethodTracing
 //
-//  Created by 啟倫 陳 on 2014/5/29.
+//  Created by 啟倫 陳 on 2014/6/3.
 //  Copyright (c) 2014年 ChilunChen. All rights reserved.
 //
 
-#import "DaiMethodTracing+AccessObject.h"
+#import "NSObject+MethodDeep.h"
 
 #import <objc/runtime.h>
 
-@implementation DaiMethodTracing (AccessObject)
+@implementation NSObject (MethodDeep)
 
 static const char METHODDEEPPOINTER;
 
-NSMutableArray* methodDeep() {
+-(void) incDeep {
+    [[self methodDeep] addObject:[NSObject new]];
+}
+
+-(void) decDeep {
+    [[self methodDeep] removeLastObject];
+}
+
+-(NSUInteger) deep {
+    return [[self methodDeep] count];
+}
+
+-(NSMutableArray*) methodDeep {
     
-    static id self;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        self = [DaiMethodTracing class];
         objc_setAssociatedObject(self, &METHODDEEPPOINTER, [NSMutableArray array], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     });
     return objc_getAssociatedObject(self, &METHODDEEPPOINTER);
