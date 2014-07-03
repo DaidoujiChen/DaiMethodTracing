@@ -2,6 +2,8 @@ DaiMethodTracing
 ================
 This is a tool for understanding your methods. You can monitor the input / output value, method relationships, method process time.
 
+![image](https://s3-ap-northeast-1.amazonaws.com/daidoujiminecraft/Daidouji/DaiMethodTracing.gif)
+
 DaidoujiChen
 
 daidoujichen@gmail.com
