@@ -141,6 +141,10 @@ method_getTypeEncoding(methodList[i]));
         
         method_getReturnType(methodList[i], dst, dstLength);
         
+        if ([NSStringFromSelector(method_getName(methodList[i])) isEqualToString:@"dealloc"]) {
+            continue;
+        }
+        
         DaiMethodTracingType returnType = typeEncoding([NSString stringWithCString:dst encoding:NSUTF8StringEncoding]);
         
         NSString *swizzlingMethodName = [NSString stringWithFormat:@"%@%@", swizzlingPrefix, NSStringFromSelector(method_getName(methodList[i]))];

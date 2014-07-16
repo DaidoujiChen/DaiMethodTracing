@@ -43,6 +43,9 @@
     
 }
 
+- (IBAction)pushAction:(id)sender {
+    [self.navigationController pushViewController:[MainViewController new] animated:YES];
+}
 
 #pragma mark - life cycle
 
@@ -70,6 +73,10 @@
 
 +(CGPoint) testFunction5 {
     return CGPointMake(0, 0);
+}
+
+-(void) dealloc {
+    NSLog(@"dealloc %@", self);
 }
 
 @end
