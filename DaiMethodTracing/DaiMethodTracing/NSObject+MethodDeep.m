@@ -12,28 +12,28 @@
 
 @implementation NSObject (MethodDeep)
 
-static const char METHODDEEPPOINTER;
-
--(void) incDeep {
-    [[self methodDeep] addObject:[NSObject new]];
+- (void)incDeep
+{
+	[[self methodDeep] addObject:[NSObject new]];
 }
 
--(void) decDeep {
-    [[self methodDeep] removeLastObject];
+- (void)decDeep
+{
+	[[self methodDeep] removeLastObject];
 }
 
--(NSUInteger) deep {
-    return [[self methodDeep] count];
+- (NSUInteger)deep
+{
+	return [[self methodDeep] count];
 }
 
--(NSMutableArray*) methodDeep {
-    
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        objc_setAssociatedObject(self, &METHODDEEPPOINTER, [NSMutableArray array], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-    });
-    return objc_getAssociatedObject(self, &METHODDEEPPOINTER);
-    
+- (NSMutableArray *)methodDeep
+{
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+	    objc_setAssociatedObject(self, _cmd, [NSMutableArray array], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+	});
+	return objc_getAssociatedObject(self, _cmd);
 }
 
 @end

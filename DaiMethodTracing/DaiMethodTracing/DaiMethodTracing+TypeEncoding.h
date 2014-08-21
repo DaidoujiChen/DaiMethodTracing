@@ -9,36 +9,36 @@
 #import "DaiMethodTracing.h"
 
 typedef enum {
-    DaiMethodTracingTypeChar,
-    DaiMethodTracingTypeInt,
-    DaiMethodTracingTypeShort,
-    DaiMethodTracingTypeLong,
-    DaiMethodTracingTypeLongLong,
-    DaiMethodTracingTypeUnsignedChar,
-    DaiMethodTracingTypeUnsignedInt,
-    DaiMethodTracingTypeUnsignedShort,
-    DaiMethodTracingTypeUnsignedLong,
-    DaiMethodTracingTypeUnsignedLongLong,
-    DaiMethodTracingTypeFloat,
-    DaiMethodTracingTypeDouble,
-    DaiMethodTracingTypeBool,
-    DaiMethodTracingTypeVoid,
-    DaiMethodTracingTypeCharPointer,
-    DaiMethodTracingTypeObject,
-    DaiMethodTracingTypeClass,
-    DaiMethodTracingTypeSelector,
-    DaiMethodTracingTypeUnknow,
+	DaiMethodTracingTypeChar,
+	DaiMethodTracingTypeInt,
+	DaiMethodTracingTypeShort,
+	DaiMethodTracingTypeLong,
+	DaiMethodTracingTypeLongLong,
+	DaiMethodTracingTypeUnsignedChar,
+	DaiMethodTracingTypeUnsignedInt,
+	DaiMethodTracingTypeUnsignedShort,
+	DaiMethodTracingTypeUnsignedLong,
+	DaiMethodTracingTypeUnsignedLongLong,
+	DaiMethodTracingTypeFloat,
+	DaiMethodTracingTypeDouble,
+	DaiMethodTracingTypeBool,
+	DaiMethodTracingTypeVoid,
+	DaiMethodTracingTypeCharPointer,
+	DaiMethodTracingTypeObject,
+	DaiMethodTracingTypeClass,
+	DaiMethodTracingTypeSelector,
+	DaiMethodTracingTypeUnknow,
     
-    DaiMethodTracingTypeCGRect,
-    DaiMethodTracingTypeCGPoint,
-    DaiMethodTracingTypeCGSize,
-    DaiMethodTracingTypeCGAffineTransform,
-    DaiMethodTracingTypeUIEdgeInsets,
-    DaiMethodTracingTypeUIOffset
+	DaiMethodTracingTypeCGRect,
+	DaiMethodTracingTypeCGPoint,
+	DaiMethodTracingTypeCGSize,
+	DaiMethodTracingTypeCGAffineTransform,
+	DaiMethodTracingTypeUIEdgeInsets,
+	DaiMethodTracingTypeUIOffset
 } DaiMethodTracingType;
 
 @interface DaiMethodTracing (TypeEncoding)
 
-DaiMethodTracingType typeEncoding(NSString* type);
+DaiMethodTracingType typeEncoding(NSString *type);
 
 @end

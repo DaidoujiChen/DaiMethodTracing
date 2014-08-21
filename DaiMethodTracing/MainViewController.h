@@ -11,5 +11,4 @@
 #import "DaiMethodTracing.h"
 
 @interface MainViewController : UIViewController
-
 @end

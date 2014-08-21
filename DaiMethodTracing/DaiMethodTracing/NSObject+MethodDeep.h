@@ -10,8 +10,8 @@
 
 @interface NSObject (MethodDeep)
 
--(void) incDeep;
--(void) decDeep;
--(NSUInteger) deep;
+- (void)incDeep;
+- (void)decDeep;
+- (NSUInteger)deep;
 
 @end

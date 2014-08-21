@@ -13,6 +13,6 @@
 
 @interface DaiMethodTracing : NSObject
 
-+(void) tracingClass : (Class) aClass;
++ (void)tracingClass:(Class)aClass;
 
 @end

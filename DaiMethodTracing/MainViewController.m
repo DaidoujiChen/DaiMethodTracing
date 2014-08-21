@@ -13,70 +13,75 @@
 
 @implementation MainViewController
 
-
--(void) didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-}
-
 #pragma mark - ibaction
 
-- (IBAction)testAction:(id)sender {
-    
-    switch (arc4random()%4) {
-        case 0:
-            [self testFunction:@"aa" test:0 block:^(bool success){
+- (IBAction)testAction:(id)sender
+{
+	switch (arc4random() % 4) {
+		case 0:
+			[self testFunction:@"aa" test:0 block: ^(bool success) {
                 NSLog(@"hello");
             }];
-            break;
-        case 1:
-            [self testFunction3];
-            break;
-        case 2:
-            [MainViewController testFunction4:@"hello"];
-            break;
-        case 3:
-            [MainViewController testFunction5];
-            break;
-        default:
-            break;
-    }
-    
+			break;
+            
+		case 1:
+			[self testFunction3];
+			break;
+            
+		case 2:
+			[MainViewController testFunction4:@"hello"];
+			break;
+            
+		case 3:
+			[MainViewController testFunction5];
+			break;
+            
+		default:
+			break;
+	}
 }
 
-- (IBAction)pushAction:(id)sender {
-    [self.navigationController pushViewController:[MainViewController new] animated:YES];
+- (IBAction)pushAction:(id)sender
+{
+	[self.navigationController pushViewController:[MainViewController new] animated:YES];
 }
 
 #pragma mark - life cycle
 
--(void) viewDidLoad {
-    [super viewDidLoad];
-    [DaiMethodTracing tracingClass:[self class]];
+- (void)viewDidLoad
+{
+	[super viewDidLoad];
+	[DaiMethodTracing tracingClass:[self class]];
 }
 
--(void) testFunction : (NSString*) myString test : (char) aChar block : (void(^)(bool success)) block {
-    block(YES);
-    
-    [self testFunction2];
+- (void)testFunction:(NSString *)myString test:(char)aChar block:(void (^)(bool success))block
+{
+	block(YES);
+	[self testFunction2];
 }
 
--(NSArray*) testFunction2 {
-    return @[@"daidouji", @"chen"];
+- (NSArray *)testFunction2
+{
+	return @[@"daidouji", @"chen"];
 }
 
--(char) testFunction3 {
-    return 0;
+- (char)testFunction3
+{
+	return 0;
 }
 
-+(void) testFunction4 : (NSString*) myString {
++ (void)testFunction4:(NSString *)myString
+{
 }
 
-+(CGPoint) testFunction5 {
-    return CGPointMake(0, 0);
++ (CGPoint)testFunction5
+{
+	return CGPointMake(0, 0);
 }
 
--(void) dealloc {
-    NSLog(@"dealloc %@", self);
+- (void)dealloc
+{
+	NSLog(@"dealloc %@", self);
 }
 
 @end
