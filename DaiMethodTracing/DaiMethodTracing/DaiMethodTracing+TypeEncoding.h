@@ -23,6 +23,7 @@ typedef enum {
 	DaiMethodTracingTypeDouble,
 	DaiMethodTracingTypeBool,
 	DaiMethodTracingTypeVoid,
+    DaiMethodTracingTypeVoidPointer,
 	DaiMethodTracingTypeCharPointer,
 	DaiMethodTracingTypeObject,
 	DaiMethodTracingTypeClass,

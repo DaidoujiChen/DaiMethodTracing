@@ -457,7 +457,15 @@ void addArguments(NSInvocation *invocation, va_list list)
 				break;
 			}
                 
-			case DaiMethodTracingTypeCharPointer :
+            case DaiMethodTracingTypeVoidPointer:
+            {
+                char *argument = va_arg(list, void *);
+                [invocation setArgument:&argument atIndex:i];
+                [argumentLogString appendFormat:@"(void*) %s", argument];
+                break;
+            }
+                
+			case DaiMethodTracingTypeCharPointer:
             {
                 char *argument = va_arg(list, char *);
                 [invocation setArgument:&argument atIndex:i];
