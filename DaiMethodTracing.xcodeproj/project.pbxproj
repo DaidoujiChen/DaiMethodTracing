@@ -25,6 +25,7 @@
 		01A40AE01934461400C55CB0 /* DaiMethodTracing+IMPs.m in Sources */ = {isa = PBXBuildFile; fileRef = 01A40ADF1934461400C55CB0 /* DaiMethodTracing+IMPs.m */; };
 		01A40AE31934659F00C55CB0 /* DaiMethodTracing+TypeEncoding.m in Sources */ = {isa = PBXBuildFile; fileRef = 01A40AE21934659F00C55CB0 /* DaiMethodTracing+TypeEncoding.m */; };
 		01EE1577193DAC4000E82B21 /* NSObject+MethodDeep.m in Sources */ = {isa = PBXBuildFile; fileRef = 01EE1576193DAC4000E82B21 /* NSObject+MethodDeep.m */; };
+		1C68FF1D1B26927800CB7C2F /* DaiSugarCoating.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C68FF1C1B26927800CB7C2F /* DaiSugarCoating.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +66,8 @@
 		01A40AE21934659F00C55CB0 /* DaiMethodTracing+TypeEncoding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "DaiMethodTracing+TypeEncoding.m"; path = "DaiMethodTracing/DaiMethodTracing+TypeEncoding.m"; sourceTree = "<group>"; };
 		01EE1575193DAC4000E82B21 /* NSObject+MethodDeep.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSObject+MethodDeep.h"; path = "DaiMethodTracing/NSObject+MethodDeep.h"; sourceTree = "<group>"; };
 		01EE1576193DAC4000E82B21 /* NSObject+MethodDeep.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSObject+MethodDeep.m"; path = "DaiMethodTracing/NSObject+MethodDeep.m"; sourceTree = "<group>"; };
+		1C68FF1B1B26927800CB7C2F /* DaiSugarCoating.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DaiSugarCoating.h; path = DaiMethodTracing/DaiSugarCoating.h; sourceTree = "<group>"; };
+		1C68FF1C1B26927800CB7C2F /* DaiSugarCoating.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DaiSugarCoating.m; path = DaiMethodTracing/DaiSugarCoating.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -176,6 +179,8 @@
 				01A40ADF1934461400C55CB0 /* DaiMethodTracing+IMPs.m */,
 				01A40AE11934659F00C55CB0 /* DaiMethodTracing+TypeEncoding.h */,
 				01A40AE21934659F00C55CB0 /* DaiMethodTracing+TypeEncoding.m */,
+				1C68FF1B1B26927800CB7C2F /* DaiSugarCoating.h */,
+				1C68FF1C1B26927800CB7C2F /* DaiSugarCoating.m */,
 			);
 			name = DaiMethodTracing;
 			sourceTree = "<group>";
@@ -278,6 +283,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				01A40ADD1934432800C55CB0 /* DaiMethodTracing.m in Sources */,
+				1C68FF1D1B26927800CB7C2F /* DaiSugarCoating.m in Sources */,
 				01A40AE31934659F00C55CB0 /* DaiMethodTracing+TypeEncoding.m in Sources */,
 				01EE1577193DAC4000E82B21 /* NSObject+MethodDeep.m in Sources */,
 				01A40AB1193441D700C55CB0 /* AppDelegate.m in Sources */,

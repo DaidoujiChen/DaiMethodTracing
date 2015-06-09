@@ -170,7 +170,7 @@ method_getTypeEncoding(methodList[i]));
 		}
         
 		//swizzling
-		[self swizzling:targetClass from:method_getName(methodList[i])to:NSSelectorFromString(swizzlingMethodName)];
+		[self swizzling:targetClass from:method_getName(methodList[i]) to:NSSelectorFromString(swizzlingMethodName)];
 	}
     
 	free(methodList);

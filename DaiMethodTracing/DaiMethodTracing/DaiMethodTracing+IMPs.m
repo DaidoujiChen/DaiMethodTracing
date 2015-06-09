@@ -12,6 +12,7 @@
 
 #import "DaiMethodTracing+TypeEncoding.h"
 #import "NSObject+MethodDeep.h"
+#import "DaiSugarCoating.h"
 
 #define createInvocation \
 [self incDeep]; \
@@ -476,6 +477,9 @@ void addArguments(NSInvocation *invocation, va_list list)
 			case DaiMethodTracingTypeObject:
 			{
 				id argument = va_arg(list, id);
+                if ([argument isKindOfClass:NSClassFromString(@"NSBlock")]) {
+                    argument = [DaiSugarCoating wrapBlock:argument];
+                }
 				[invocation setArgument:&argument atIndex:i];
 				[argumentLogString appendFormat:@"(id) %@", argument];
 				break;

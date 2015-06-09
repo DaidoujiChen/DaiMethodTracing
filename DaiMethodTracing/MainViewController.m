@@ -17,71 +17,74 @@
 
 - (IBAction)testAction:(id)sender
 {
-	switch (arc4random() % 4) {
-		case 0:
-			[self testFunction:@"aa" test:0 block: ^(bool success) {
+    switch (arc4random() % 4) {
+        case 0:
+            [self testMethod:@"aa" char:0 block: ^NSString *(bool success, void (^blockInBlock)(BOOL finish)) {
                 NSLog(@"hello");
+                blockInBlock(NO);
+                return @"daidouji";
             }];
-			break;
+            break;
             
-		case 1:
-			[self testFunction3];
-			break;
+        case 1:
+            [self testMethod3];
+            break;
             
-		case 2:
-			[MainViewController testFunction4:@"hello"];
-			break;
+        case 2:
+            [MainViewController testMethod4:@"hello"];
+            break;
             
-		case 3:
-			[MainViewController testFunction5];
-			break;
+        case 3:
+            [MainViewController testMethod5];
+            break;
             
-		default:
-			break;
-	}
+        default:
+            break;
+    }
 }
 
 - (IBAction)pushAction:(id)sender
 {
-	[self.navigationController pushViewController:[MainViewController new] animated:YES];
+    [self.navigationController pushViewController:[MainViewController new] animated:YES];
+}
+
+#pragma mark - private instance method
+
+- (void)testMethod:(NSString *)myString char :(char)aChar block:(NSString * (^)(bool success, void (^blockInBlock)(BOOL finish)))block
+{
+    NSLog(@"%@", block(YES, ^(BOOL finish) {
+        NSLog(@"ok finish");
+    }));
+    [self testMethod2];
+}
+
+- (NSArray *)testMethod2
+{
+    return @[@"daidouji", @"chen"];
+}
+
+- (char)testMethod3 {
+    return 0;
+}
+
++ (void)testMethod4:(NSString *)myString
+{
+}
+
++ (CGPoint)testMethod5 {
+    return CGPointMake(0, 0);
 }
 
 #pragma mark - life cycle
 
-- (void)viewDidLoad
++ (void)load
 {
-	[super viewDidLoad];
-	[DaiMethodTracing tracingClass:[self class]];
-}
-
-- (void)testFunction:(NSString *)myString test:(char)aChar block:(void (^)(bool success))block
-{
-	block(YES);
-	[self testFunction2];
-}
-
-- (NSArray *)testFunction2
-{
-	return @[@"daidouji", @"chen"];
-}
-
-- (char)testFunction3
-{
-	return 0;
-}
-
-+ (void)testFunction4:(NSString *)myString
-{
-}
-
-+ (CGPoint)testFunction5
-{
-	return CGPointMake(0, 0);
+    [DaiMethodTracing tracingClass:[MainViewController class]];
 }
 
 - (void)dealloc
 {
-	NSLog(@"dealloc %@", self);
+    NSLog(@"dealloc %@", self);
 }
 
 @end
