@@ -1,16 +1,15 @@
 //
-//  DaiMethodTracing+TypeEncoding.m
+//  DaiMethodTracingType.m
 //  DaiMethodTracing
 //
-//  Created by 啟倫 陳 on 2014/5/27.
-//  Copyright (c) 2014年 ChilunChen. All rights reserved.
+//  Created by DaidoujiChen on 2015/6/10.
+//  Copyright (c) 2015年 ChilunChen. All rights reserved.
 //
 
-#import "DaiMethodTracing+TypeEncoding.h"
+#import "DaiMethodTracingType.h"
 
-@implementation DaiMethodTracing (TypeEncoding)
-
-DaiMethodTracingType typeEncoding(NSString *type) {
+DaiMethodTracingType tracingType(NSString *type)
+{
     if (strncmp([type UTF8String], "c", 1) == 0) {
         return DaiMethodTracingTypeChar;
     } else if (strncmp([type UTF8String], "i", 1) == 0) {
@@ -67,7 +66,5 @@ DaiMethodTracingType typeEncoding(NSString *type) {
         return DaiMethodTracingTypeUIOffset;
     }
     
-	return -1;
+    return -1;
 }
-
-@end

@@ -9,9 +9,11 @@
 // reference https://github.com/mikeash/MABlockForwarding
 
 #import "DaiSugarCoating.h"
+
 #import <objc/runtime.h>
 #import <objc/message.h>
-#import "DaiMethodTracing+TypeEncoding.h"
+
+#import "DaiMethodTracingType.h"
 #import "NSObject+MethodDeep.h"
 
 typedef void (^BlockInterposer)(NSInvocation *invocation, void (^call)(void));
@@ -143,7 +145,7 @@ enum {
     
     // 回傳型別
     NSString *returnType = [NSString stringWithFormat:@"%s", signature.methodReturnType];
-    switch (typeEncoding(returnType)) {
+    switch (tracingType(returnType)) {
         case DaiMethodTracingTypeChar:
             [blockFacesString appendString:@"char"];
             break;
@@ -251,7 +253,7 @@ enum {
     NSMutableArray *argTypes = [NSMutableArray array];
     for (unsigned i = 1; i < signature.numberOfArguments; i++) {
         NSString *argType = [NSString stringWithFormat:@"%s", [signature getArgumentTypeAtIndex:i]];
-        switch (typeEncoding(argType)) {
+        switch (tracingType(argType)) {
             case DaiMethodTracingTypeChar:
                 [argTypes addObject:@"char"];
                 break;
@@ -363,7 +365,7 @@ enum {
 + (id)wrapBlock:(id)blockObj
 {
     return [[DaiSugarCoating alloc] initWithBlock:blockObj interposer: ^(NSInvocation *invocation, void (^call)(void)) {
-        NSMethodSignature *signature = [invocation methodSignature];
+        NSMethodSignature *signature = invocation.methodSignature;
         
         // 取得所有參數
         for (unsigned i = 1; i < signature.numberOfArguments; i++) {
@@ -372,7 +374,7 @@ enum {
             NSMutableString *argumentLogString = [NSMutableString string];
             [argumentLogString appendString:@"(BLOCK)> "];
             
-            switch (typeEncoding(argumentType)) {
+            switch (tracingType(argumentType)) {
                 case DaiMethodTracingTypeChar:
                 {
                     char argument;
@@ -570,7 +572,7 @@ enum {
                 }
                     
                 default:
-                    NSLog(@"%@, %@", NSStringFromSelector([invocation selector]), [NSString stringWithCString:[[invocation methodSignature] getArgumentTypeAtIndex:i] encoding:NSUTF8StringEncoding]);
+                    NSLog(@"%@, %@", NSStringFromSelector([invocation selector]), [NSString stringWithCString:[invocation.methodSignature getArgumentTypeAtIndex:i] encoding:NSUTF8StringEncoding]);
                     break;
             }
             NSLog(@"%@", argumentLogString);
@@ -584,7 +586,7 @@ enum {
         // 取得回傳值
         NSMutableString *returnLogString = [NSMutableString string];
         [returnLogString appendString:@"(BLOCK)> return "];
-        switch (typeEncoding(returnType)) {
+        switch (tracingType(returnType)) {
             case DaiMethodTracingTypeChar:
             {
                 char argument;
@@ -777,8 +779,10 @@ enum {
                 break;
             }
                 
+            case DaiMethodTracingTypeVoid:
+                [returnLogString appendString:@"void"];
+                
             default:
-                [returnLogString appendFormat:@"void"];
                 break;
         }
         NSLog(@"%@", returnLogString);

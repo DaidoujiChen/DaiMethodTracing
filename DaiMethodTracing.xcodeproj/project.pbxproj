@@ -22,9 +22,9 @@
 		01A40AD81934421000C55CB0 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01A40AD61934421000C55CB0 /* MainViewController.m */; };
 		01A40AD91934421000C55CB0 /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01A40AD71934421000C55CB0 /* MainViewController.xib */; };
 		01A40ADD1934432800C55CB0 /* DaiMethodTracing.m in Sources */ = {isa = PBXBuildFile; fileRef = 01A40ADC1934432800C55CB0 /* DaiMethodTracing.m */; };
-		01A40AE01934461400C55CB0 /* DaiMethodTracing+IMPs.m in Sources */ = {isa = PBXBuildFile; fileRef = 01A40ADF1934461400C55CB0 /* DaiMethodTracing+IMPs.m */; };
-		01A40AE31934659F00C55CB0 /* DaiMethodTracing+TypeEncoding.m in Sources */ = {isa = PBXBuildFile; fileRef = 01A40AE21934659F00C55CB0 /* DaiMethodTracing+TypeEncoding.m */; };
 		01EE1577193DAC4000E82B21 /* NSObject+MethodDeep.m in Sources */ = {isa = PBXBuildFile; fileRef = 01EE1576193DAC4000E82B21 /* NSObject+MethodDeep.m */; };
+		1C28A5C41B2836420054D953 /* DaiMethodTracingIMP.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C28A5C31B2836420054D953 /* DaiMethodTracingIMP.m */; };
+		1C28A5C71B28373C0054D953 /* DaiMethodTracingType.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C28A5C61B28373C0054D953 /* DaiMethodTracingType.m */; };
 		1C68FF1D1B26927800CB7C2F /* DaiSugarCoating.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C68FF1C1B26927800CB7C2F /* DaiSugarCoating.m */; };
 /* End PBXBuildFile section */
 
@@ -60,12 +60,13 @@
 		01A40AD71934421000C55CB0 /* MainViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainViewController.xib; sourceTree = "<group>"; };
 		01A40ADB1934432800C55CB0 /* DaiMethodTracing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DaiMethodTracing.h; path = DaiMethodTracing/DaiMethodTracing.h; sourceTree = "<group>"; };
 		01A40ADC1934432800C55CB0 /* DaiMethodTracing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DaiMethodTracing.m; path = DaiMethodTracing/DaiMethodTracing.m; sourceTree = "<group>"; };
-		01A40ADE1934461400C55CB0 /* DaiMethodTracing+IMPs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "DaiMethodTracing+IMPs.h"; path = "DaiMethodTracing/DaiMethodTracing+IMPs.h"; sourceTree = "<group>"; };
-		01A40ADF1934461400C55CB0 /* DaiMethodTracing+IMPs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "DaiMethodTracing+IMPs.m"; path = "DaiMethodTracing/DaiMethodTracing+IMPs.m"; sourceTree = "<group>"; };
-		01A40AE11934659F00C55CB0 /* DaiMethodTracing+TypeEncoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "DaiMethodTracing+TypeEncoding.h"; path = "DaiMethodTracing/DaiMethodTracing+TypeEncoding.h"; sourceTree = "<group>"; };
-		01A40AE21934659F00C55CB0 /* DaiMethodTracing+TypeEncoding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "DaiMethodTracing+TypeEncoding.m"; path = "DaiMethodTracing/DaiMethodTracing+TypeEncoding.m"; sourceTree = "<group>"; };
 		01EE1575193DAC4000E82B21 /* NSObject+MethodDeep.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSObject+MethodDeep.h"; path = "DaiMethodTracing/NSObject+MethodDeep.h"; sourceTree = "<group>"; };
 		01EE1576193DAC4000E82B21 /* NSObject+MethodDeep.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSObject+MethodDeep.m"; path = "DaiMethodTracing/NSObject+MethodDeep.m"; sourceTree = "<group>"; };
+		1C28A5C21B2836420054D953 /* DaiMethodTracingIMP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DaiMethodTracingIMP.h; path = DaiMethodTracing/DaiMethodTracingIMP.h; sourceTree = "<group>"; };
+		1C28A5C31B2836420054D953 /* DaiMethodTracingIMP.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DaiMethodTracingIMP.m; path = DaiMethodTracing/DaiMethodTracingIMP.m; sourceTree = "<group>"; };
+		1C28A5C51B28373C0054D953 /* DaiMethodTracingType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DaiMethodTracingType.h; path = DaiMethodTracing/DaiMethodTracingType.h; sourceTree = "<group>"; };
+		1C28A5C61B28373C0054D953 /* DaiMethodTracingType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DaiMethodTracingType.m; path = DaiMethodTracing/DaiMethodTracingType.m; sourceTree = "<group>"; };
+		1C28A5C81B2838DD0054D953 /* DaiMethodTracingDefine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DaiMethodTracingDefine.h; path = DaiMethodTracing/DaiMethodTracingDefine.h; sourceTree = "<group>"; };
 		1C68FF1B1B26927800CB7C2F /* DaiSugarCoating.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DaiSugarCoating.h; path = DaiMethodTracing/DaiSugarCoating.h; sourceTree = "<group>"; };
 		1C68FF1C1B26927800CB7C2F /* DaiSugarCoating.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DaiSugarCoating.m; path = DaiMethodTracing/DaiSugarCoating.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -171,16 +172,17 @@
 		01A40ADA193442EA00C55CB0 /* DaiMethodTracing */ = {
 			isa = PBXGroup;
 			children = (
+				1C28A5C81B2838DD0054D953 /* DaiMethodTracingDefine.h */,
 				01A40ADB1934432800C55CB0 /* DaiMethodTracing.h */,
 				01A40ADC1934432800C55CB0 /* DaiMethodTracing.m */,
 				01EE1575193DAC4000E82B21 /* NSObject+MethodDeep.h */,
 				01EE1576193DAC4000E82B21 /* NSObject+MethodDeep.m */,
-				01A40ADE1934461400C55CB0 /* DaiMethodTracing+IMPs.h */,
-				01A40ADF1934461400C55CB0 /* DaiMethodTracing+IMPs.m */,
-				01A40AE11934659F00C55CB0 /* DaiMethodTracing+TypeEncoding.h */,
-				01A40AE21934659F00C55CB0 /* DaiMethodTracing+TypeEncoding.m */,
 				1C68FF1B1B26927800CB7C2F /* DaiSugarCoating.h */,
 				1C68FF1C1B26927800CB7C2F /* DaiSugarCoating.m */,
+				1C28A5C21B2836420054D953 /* DaiMethodTracingIMP.h */,
+				1C28A5C31B2836420054D953 /* DaiMethodTracingIMP.m */,
+				1C28A5C51B28373C0054D953 /* DaiMethodTracingType.h */,
+				1C28A5C61B28373C0054D953 /* DaiMethodTracingType.m */,
 			);
 			name = DaiMethodTracing;
 			sourceTree = "<group>";
@@ -282,14 +284,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1C28A5C41B2836420054D953 /* DaiMethodTracingIMP.m in Sources */,
 				01A40ADD1934432800C55CB0 /* DaiMethodTracing.m in Sources */,
 				1C68FF1D1B26927800CB7C2F /* DaiSugarCoating.m in Sources */,
-				01A40AE31934659F00C55CB0 /* DaiMethodTracing+TypeEncoding.m in Sources */,
 				01EE1577193DAC4000E82B21 /* NSObject+MethodDeep.m in Sources */,
 				01A40AB1193441D700C55CB0 /* AppDelegate.m in Sources */,
 				01A40AD81934421000C55CB0 /* MainViewController.m in Sources */,
 				01A40AAD193441D700C55CB0 /* main.m in Sources */,
-				01A40AE01934461400C55CB0 /* DaiMethodTracing+IMPs.m in Sources */,
+				1C28A5C71B28373C0054D953 /* DaiMethodTracingType.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

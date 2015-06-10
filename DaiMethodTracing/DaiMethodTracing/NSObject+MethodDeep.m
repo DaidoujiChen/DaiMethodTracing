@@ -24,7 +24,7 @@
 
 - (NSUInteger)deep
 {
-	return [[self methodDeep] count];
+	return [self methodDeep].count;
 }
 
 - (NSMutableArray *)methodDeep

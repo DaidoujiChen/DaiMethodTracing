@@ -1,14 +1,10 @@
 //
-//  DaiMethodTracing+IMPs.h
+//  DaiMethodTracingIMP.h
 //  DaiMethodTracing
 //
-//  Created by 啟倫 陳 on 2014/5/27.
-//  Copyright (c) 2014年 ChilunChen. All rights reserved.
+//  Created by DaidoujiChen on 2015/6/10.
+//  Copyright (c) 2015年 ChilunChen. All rights reserved.
 //
-
-#import "DaiMethodTracing.h"
-
-@interface DaiMethodTracing (IMPs)
 
 char charMethodIMP(id self, SEL _cmd, ...);
 int intMethodIMP(id self, SEL _cmd, ...);
@@ -35,5 +31,3 @@ CGSize cgSizeMethodIMP(id self, SEL _cmd, ...);
 CGAffineTransform cgAffineTransformMethodIMP(id self, SEL _cmd, ...);
 UIEdgeInsets uiEdgeInsetsMethodIMP(id self, SEL _cmd, ...);
 UIOffset uiOffsetMethodIMP(id self, SEL _cmd, ...);
-
-@end

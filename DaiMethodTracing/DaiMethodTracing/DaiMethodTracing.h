@@ -8,9 +8,6 @@
 
 #import <Foundation/Foundation.h>
 
-#define dstLength 256
-#define swizzlingPrefix @"daiSwizzling_"
-
 @interface DaiMethodTracing : NSObject
 
 + (void)tracingClass:(Class)aClass;
