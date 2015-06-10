@@ -8,6 +8,8 @@ DaidoujiChen
 
 daidoujichen@gmail.com
 
+特別感謝 [Hai Feng Kao](https://github.com/haifengkao) 提供 block 部分的做法.
+
 總覽
 ================
 概念起源於 debug 時候的一些想法, 有時候想看看每個 method 的傳值是不是正確, 回傳值是不是正確, 以及執行花費多少時間等等的,
@@ -28,6 +30,5 @@ daidoujichen@gmail.com
 
 已知問題
 ================
-無法對付 block 和 struct.
-- block, 不能知道 block 何時開始執行, 何時結束.
+無法對付 struct.
 - struct, 內建的應該是可以, 但是自定義的 struct 會有解析上的問題.
