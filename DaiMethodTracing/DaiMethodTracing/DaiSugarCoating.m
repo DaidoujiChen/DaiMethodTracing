@@ -53,7 +53,7 @@ enum {
 @property (nonatomic, assign) IMP invoke;
 @property (nonatomic, assign) BlockDescriptor blockDescriptor;
 @property (nonatomic, copy) id forwardingBlock;
-@property (nonatomic, copy)  BlockInterposer interposer;
+@property (nonatomic, copy) BlockInterposer interposer;
 
 @end
 

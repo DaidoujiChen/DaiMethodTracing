@@ -71,15 +71,17 @@
 {
 }
 
-+ (CGPoint)testMethod5 {
++ (CGPoint)testMethod5
+{
     return CGPointMake(0, 0);
 }
 
 #pragma mark - life cycle
 
-+ (void)load
+- (void)viewDidLoad
 {
-    [DaiMethodTracing tracingClass:[MainViewController class]];
+    [super viewDidLoad];
+    [DaiMethodTracing tracingClass:[self class]];
 }
 
 - (void)dealloc

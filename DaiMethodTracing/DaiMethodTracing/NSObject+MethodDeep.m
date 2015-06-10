@@ -14,7 +14,7 @@
 
 - (void)incDeep
 {
-	[[self methodDeep] addObject:[NSObject new]];
+	[[self methodDeep] addObject:[NSNull null]];
 }
 
 - (void)decDeep

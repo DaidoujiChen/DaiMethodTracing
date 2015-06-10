@@ -16,10 +16,16 @@
 
 @implementation DaiMethodTracing
 
+#pragma mark - class method
+
 + (void)tracingClass:(Class)aClass
 {
-	[self swizzlingClassMethod:aClass];
-	[self swizzlingInstanceMethod:aClass];
+    if ([self isSwizzleAble:aClass]) {
+        [self swizzlingClassMethod:aClass];
+        [self swizzlingInstanceMethod:aClass];
+    } else {
+        NSLog(@"this class already in tracing");
+    }
 }
 
 #pragma mark - private class method
@@ -42,15 +48,15 @@
     
 	for (unsigned int i = 0; i < methodCount; i++) {
 		char dst[dstLength];
-        
 		method_getReturnType(methodList[i], dst, dstLength);
         
+        // do not swizlling dealloc
 		if ([NSStringFromSelector(method_getName(methodList[i])) isEqualToString:@"dealloc"]) {
 			continue;
 		}
         
+        // prepare required arguments
 		DaiMethodTracingType returnType = tracingType([NSString stringWithCString:dst encoding:NSUTF8StringEncoding]);
-        
 		NSString *swizzlingMethodName = [NSString stringWithFormat:@"%@%@", swizzlingPrefix, NSStringFromSelector(method_getName(methodList[i]))];
         SEL swizzlingMethodSelector = NSSelectorFromString(swizzlingMethodName);
         const char *typeEncoding = method_getTypeEncoding(methodList[i]);
@@ -179,6 +185,26 @@
 	} else {
 		method_exchangeImplementations(originalMethod, swizzledMethod);
 	}
+}
+
++ (BOOL)isSwizzleAble:(Class)aClass
+{
+    NSString *className = NSStringFromClass(aClass);
+    if ([self swizzleTable][className]) {
+        return NO;
+    } else {
+        [self swizzleTable][className] = [NSNull null];
+        return YES;
+    }
+}
+
++ (NSMutableDictionary *)swizzleTable
+{
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        objc_setAssociatedObject(self, _cmd, [NSMutableDictionary dictionary], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    });
+    return objc_getAssociatedObject(self, _cmd);
 }
 
 @end
