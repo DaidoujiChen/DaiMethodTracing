@@ -15,6 +15,7 @@
 
 #import "DaiMethodTracingType.h"
 #import "NSObject+MethodDeep.h"
+#import "SFExecuteOnDeallocInternalObject.h"
 
 typedef void (^BlockInterposer)(NSInvocation *invocation, void (^call)(void));
 
@@ -113,6 +114,14 @@ enum {
 {
     self = [super init];
     if (self) {
+        
+        // 當目標 block 被 dealloc 時, 會回到這邊, 此時, 再對 DaiSugarCoating 做釋放, 避免過早被 dealloc 的問題
+        SFExecuteOnDeallocInternalObject *internalObject = [[SFExecuteOnDeallocInternalObject alloc] initWithBlock: ^{
+            [[DaiSugarCoating aliveMapping] removeObjectForKey:[NSString stringWithFormat:@"%p-%p", self, block]];
+        }];
+        objc_setAssociatedObject(block, _cmd, internalObject, OBJC_ASSOCIATION_RETAIN);
+        
+        // 轉印 data
         self.forwardingBlock = block;
         self.interposer = interposer;
         self.flags = ((__bridge Block *)block)->flags & ~0xFFFF;
@@ -134,6 +143,9 @@ enum {
             self.invoke = _objc_msgForward;
         }
     }
+    
+    // 保持自己活著
+    [DaiSugarCoating aliveMapping][[NSString stringWithFormat:@"%p-%p", self, block]] = self;
     return self;
 }
 
@@ -358,6 +370,16 @@ enum {
     [blockFacesString appendFormat:@"%@", [argTypes componentsJoinedByString:@", "]];
     [blockFacesString appendString:@")"];
     return blockFacesString;
+}
+
+#pragma mark - private class method
+
++ (NSMutableDictionary *)aliveMapping {
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        objc_setAssociatedObject(self, _cmd, [NSMutableDictionary dictionary], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    });
+    return objc_getAssociatedObject(self, _cmd);
 }
 
 #pragma mark - class method

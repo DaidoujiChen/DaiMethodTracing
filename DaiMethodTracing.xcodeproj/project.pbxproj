@@ -26,6 +26,7 @@
 		1C28A5C41B2836420054D953 /* DaiMethodTracingIMP.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C28A5C31B2836420054D953 /* DaiMethodTracingIMP.m */; };
 		1C28A5C71B28373C0054D953 /* DaiMethodTracingType.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C28A5C61B28373C0054D953 /* DaiMethodTracingType.m */; };
 		1C68FF1D1B26927800CB7C2F /* DaiSugarCoating.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C68FF1C1B26927800CB7C2F /* DaiSugarCoating.m */; };
+		1CEE0D241B29377200B66CC3 /* SFExecuteOnDeallocInternalObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CEE0D231B29377200B66CC3 /* SFExecuteOnDeallocInternalObject.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,6 +70,8 @@
 		1C28A5C81B2838DD0054D953 /* DaiMethodTracingDefine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DaiMethodTracingDefine.h; path = DaiMethodTracing/DaiMethodTracingDefine.h; sourceTree = "<group>"; };
 		1C68FF1B1B26927800CB7C2F /* DaiSugarCoating.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DaiSugarCoating.h; path = DaiMethodTracing/DaiSugarCoating.h; sourceTree = "<group>"; };
 		1C68FF1C1B26927800CB7C2F /* DaiSugarCoating.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DaiSugarCoating.m; path = DaiMethodTracing/DaiSugarCoating.m; sourceTree = "<group>"; };
+		1CEE0D221B29377200B66CC3 /* SFExecuteOnDeallocInternalObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SFExecuteOnDeallocInternalObject.h; path = DaiMethodTracing/SFExecuteOnDeallocInternalObject.h; sourceTree = "<group>"; };
+		1CEE0D231B29377200B66CC3 /* SFExecuteOnDeallocInternalObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SFExecuteOnDeallocInternalObject.m; path = DaiMethodTracing/SFExecuteOnDeallocInternalObject.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -179,6 +182,8 @@
 				01EE1576193DAC4000E82B21 /* NSObject+MethodDeep.m */,
 				1C68FF1B1B26927800CB7C2F /* DaiSugarCoating.h */,
 				1C68FF1C1B26927800CB7C2F /* DaiSugarCoating.m */,
+				1CEE0D221B29377200B66CC3 /* SFExecuteOnDeallocInternalObject.h */,
+				1CEE0D231B29377200B66CC3 /* SFExecuteOnDeallocInternalObject.m */,
 				1C28A5C21B2836420054D953 /* DaiMethodTracingIMP.h */,
 				1C28A5C31B2836420054D953 /* DaiMethodTracingIMP.m */,
 				1C28A5C51B28373C0054D953 /* DaiMethodTracingType.h */,
@@ -286,6 +291,7 @@
 			files = (
 				1C28A5C41B2836420054D953 /* DaiMethodTracingIMP.m in Sources */,
 				01A40ADD1934432800C55CB0 /* DaiMethodTracing.m in Sources */,
+				1CEE0D241B29377200B66CC3 /* SFExecuteOnDeallocInternalObject.m in Sources */,
 				1C68FF1D1B26927800CB7C2F /* DaiSugarCoating.m in Sources */,
 				01EE1577193DAC4000E82B21 /* NSObject+MethodDeep.m in Sources */,
 				01A40AB1193441D700C55CB0 /* AppDelegate.m in Sources */,
