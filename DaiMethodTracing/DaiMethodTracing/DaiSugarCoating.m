@@ -17,7 +17,7 @@
 #import "NSObject+MethodDeep.h"
 #import "SFExecuteOnDeallocInternalObject.h"
 
-typedef void (^BlockInterposer)(NSInvocation *invocation, void (^call)(void));
+typedef void (^BlockInterposer)(id sugarCoating, NSInvocation *invocation, void (^call)(void));
 
 typedef struct {
     unsigned long reserved;
@@ -97,7 +97,7 @@ enum {
     [invocation setTarget:self.forwardingBlock];
     NSTimeInterval startTime = [[NSDate date] timeIntervalSince1970];
     NSLog(@"(BLOCK-%p)> start %@ ", self, [self blockFaces:invocation.methodSignature]);
-    self.interposer(invocation, ^{
+    self.interposer(self, invocation, ^{
         [invocation invokeUsingIMP:[self blockIMP:self.forwardingBlock]];
     });
     NSLog(@"(BLOCK-%p)> finish %@ , use %fs", self, [self blockFaces:invocation.methodSignature], [[NSDate date] timeIntervalSince1970] - startTime);
@@ -386,7 +386,7 @@ enum {
 
 + (id)wrapBlock:(id)blockObj
 {
-    return [[DaiSugarCoating alloc] initWithBlock:blockObj interposer: ^(NSInvocation *invocation, void (^call)(void)) {
+    return [[DaiSugarCoating alloc] initWithBlock:blockObj interposer: ^(id sugarCoating, NSInvocation *invocation, void (^call)(void)) {
         NSMethodSignature *signature = invocation.methodSignature;
         
         // 取得所有參數
@@ -394,7 +394,7 @@ enum {
             NSString *argumentType = [NSString stringWithFormat:@"%s", [signature getArgumentTypeAtIndex:i]];
             
             NSMutableString *argumentLogString = [NSMutableString string];
-            [argumentLogString appendString:@"(BLOCK)> "];
+            [argumentLogString appendFormat:@"(BLOCK-%p)> ", sugarCoating];
             
             switch (tracingType(argumentType)) {
                 case DaiMethodTracingTypeChar:
@@ -519,7 +519,7 @@ enum {
                     
                 case DaiMethodTracingTypeObject:
                 {
-                    id argument;
+                    __unsafe_unretained id argument;
                     [invocation getArgument:&argument atIndex:i];
                     if ([argument isKindOfClass:NSClassFromString(@"NSBlock")]) {
                         argument = [DaiSugarCoating wrapBlock:argument];
@@ -607,7 +607,7 @@ enum {
         
         // 取得回傳值
         NSMutableString *returnLogString = [NSMutableString string];
-        [returnLogString appendString:@"(BLOCK)> return "];
+        [returnLogString appendFormat:@"(BLOCK-%p)> return ", sugarCoating];
         switch (tracingType(returnType)) {
             case DaiMethodTracingTypeChar:
             {
