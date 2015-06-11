@@ -19,7 +19,7 @@
 {
     switch (arc4random() % 4) {
         case 0:
-            [self testMethod:@"aa" char:0 block: ^NSString *(bool success, void (^blockInBlock)(BOOL finish)) {
+            [self testMethod:@"aa" aChar:0 block: ^NSString *(bool success, void (^blockInBlock)(BOOL finish)) {
                 NSLog(@"hello");
                 blockInBlock(NO);
                 return @"daidouji";
@@ -50,7 +50,7 @@
 
 #pragma mark - private instance method
 
-- (void)testMethod:(NSString *)myString char :(char)aChar block:(NSString * (^)(bool success, void (^blockInBlock)(BOOL finish)))block
+- (void)testMethod:(NSString *)myString aChar:(char)aChar block:(NSString * (^)(bool success, void (^blockInBlock)(BOOL finish)))block
 {
     NSLog(@"%@", block(YES, ^(BOOL finish) {
         NSLog(@"ok finish");
@@ -63,7 +63,8 @@
     return @[@"daidouji", @"chen"];
 }
 
-- (char)testMethod3 {
+- (char)testMethod3
+{
     return 0;
 }
 

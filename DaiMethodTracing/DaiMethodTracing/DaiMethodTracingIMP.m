@@ -244,6 +244,7 @@ NSInvocation *createInvocation(id self, SEL _cmd, va_list list)
 char charMethodIMP(id self, SEL _cmd, ...)
 {
     [self incDeep];
+    NSLog(@"(%lu)> start %@ at %@", (unsigned long)[self deep], self, NSStringFromSelector(_cmd));
     
     // 建立 invocation, 並填入變數
     va_list list;
@@ -253,7 +254,6 @@ char charMethodIMP(id self, SEL _cmd, ...)
     
     // 運行
     NSTimeInterval startTime = [[NSDate date] timeIntervalSince1970];
-    NSLog(@"(%lu)> start %@ at %@", (unsigned long)[self deep], self, NSStringFromSelector(_cmd));
     [invocation invoke];
     NSLog(@"(%lu)> finish %@ at %@, use %fs", (unsigned long)[self deep], self, NSStringFromSelector(_cmd), [[NSDate date] timeIntervalSince1970] - startTime);
     
@@ -269,6 +269,7 @@ char charMethodIMP(id self, SEL _cmd, ...)
 int intMethodIMP(id self, SEL _cmd, ...)
 {
     [self incDeep];
+    NSLog(@"(%lu)> start %@ at %@", (unsigned long)[self deep], self, NSStringFromSelector(_cmd));
     
     // 建立 invocation, 並填入變數
     va_list list;
@@ -278,7 +279,6 @@ int intMethodIMP(id self, SEL _cmd, ...)
     
     // 運行
     NSTimeInterval startTime = [[NSDate date] timeIntervalSince1970];
-    NSLog(@"(%lu)> start %@ at %@", (unsigned long)[self deep], self, NSStringFromSelector(_cmd));
     [invocation invoke];
     NSLog(@"(%lu)> finish %@ at %@, use %fs", (unsigned long)[self deep], self, NSStringFromSelector(_cmd), [[NSDate date] timeIntervalSince1970] - startTime);
     
@@ -294,6 +294,7 @@ int intMethodIMP(id self, SEL _cmd, ...)
 short shortMethodIMP(id self, SEL _cmd, ...)
 {
     [self incDeep];
+    NSLog(@"(%lu)> start %@ at %@", (unsigned long)[self deep], self, NSStringFromSelector(_cmd));
     
     // 建立 invocation, 並填入變數
     va_list list;
@@ -303,7 +304,6 @@ short shortMethodIMP(id self, SEL _cmd, ...)
     
     // 運行
     NSTimeInterval startTime = [[NSDate date] timeIntervalSince1970];
-    NSLog(@"(%lu)> start %@ at %@", (unsigned long)[self deep], self, NSStringFromSelector(_cmd));
     [invocation invoke];
     NSLog(@"(%lu)> finish %@ at %@, use %fs", (unsigned long)[self deep], self, NSStringFromSelector(_cmd), [[NSDate date] timeIntervalSince1970] - startTime);
     
@@ -319,6 +319,7 @@ short shortMethodIMP(id self, SEL _cmd, ...)
 long longMethodIMP(id self, SEL _cmd, ...)
 {
     [self incDeep];
+    NSLog(@"(%lu)> start %@ at %@", (unsigned long)[self deep], self, NSStringFromSelector(_cmd));
     
     // 建立 invocation, 並填入變數
     va_list list;
@@ -328,7 +329,6 @@ long longMethodIMP(id self, SEL _cmd, ...)
     
     // 運行
     NSTimeInterval startTime = [[NSDate date] timeIntervalSince1970];
-    NSLog(@"(%lu)> start %@ at %@", (unsigned long)[self deep], self, NSStringFromSelector(_cmd));
     [invocation invoke];
     NSLog(@"(%lu)> finish %@ at %@, use %fs", (unsigned long)[self deep], self, NSStringFromSelector(_cmd), [[NSDate date] timeIntervalSince1970] - startTime);
     
@@ -344,6 +344,7 @@ long longMethodIMP(id self, SEL _cmd, ...)
 long long longlongMethodIMP(id self, SEL _cmd, ...)
 {
     [self incDeep];
+    NSLog(@"(%lu)> start %@ at %@", (unsigned long)[self deep], self, NSStringFromSelector(_cmd));
     
     // 建立 invocation, 並填入變數
     va_list list;
@@ -353,7 +354,6 @@ long long longlongMethodIMP(id self, SEL _cmd, ...)
     
     // 運行
     NSTimeInterval startTime = [[NSDate date] timeIntervalSince1970];
-    NSLog(@"(%lu)> start %@ at %@", (unsigned long)[self deep], self, NSStringFromSelector(_cmd));
     [invocation invoke];
     NSLog(@"(%lu)> finish %@ at %@, use %fs", (unsigned long)[self deep], self, NSStringFromSelector(_cmd), [[NSDate date] timeIntervalSince1970] - startTime);
     
@@ -369,6 +369,7 @@ long long longlongMethodIMP(id self, SEL _cmd, ...)
 unsigned char unsignedCharMethodIMP(id self, SEL _cmd, ...)
 {
     [self incDeep];
+    NSLog(@"(%lu)> start %@ at %@", (unsigned long)[self deep], self, NSStringFromSelector(_cmd));
     
     // 建立 invocation, 並填入變數
     va_list list;
@@ -378,7 +379,6 @@ unsigned char unsignedCharMethodIMP(id self, SEL _cmd, ...)
     
     // 運行
     NSTimeInterval startTime = [[NSDate date] timeIntervalSince1970];
-    NSLog(@"(%lu)> start %@ at %@", (unsigned long)[self deep], self, NSStringFromSelector(_cmd));
     [invocation invoke];
     NSLog(@"(%lu)> finish %@ at %@, use %fs", (unsigned long)[self deep], self, NSStringFromSelector(_cmd), [[NSDate date] timeIntervalSince1970] - startTime);
     
@@ -394,6 +394,7 @@ unsigned char unsignedCharMethodIMP(id self, SEL _cmd, ...)
 unsigned int unsignedIntMethodIMP(id self, SEL _cmd, ...)
 {
     [self incDeep];
+    NSLog(@"(%lu)> start %@ at %@", (unsigned long)[self deep], self, NSStringFromSelector(_cmd));
     
     // 建立 invocation, 並填入變數
     va_list list;
@@ -403,7 +404,6 @@ unsigned int unsignedIntMethodIMP(id self, SEL _cmd, ...)
     
     // 運行
     NSTimeInterval startTime = [[NSDate date] timeIntervalSince1970];
-    NSLog(@"(%lu)> start %@ at %@", (unsigned long)[self deep], self, NSStringFromSelector(_cmd));
     [invocation invoke];
     NSLog(@"(%lu)> finish %@ at %@, use %fs", (unsigned long)[self deep], self, NSStringFromSelector(_cmd), [[NSDate date] timeIntervalSince1970] - startTime);
     
@@ -419,6 +419,7 @@ unsigned int unsignedIntMethodIMP(id self, SEL _cmd, ...)
 unsigned short unsignedShortMethodIMP(id self, SEL _cmd, ...)
 {
     [self incDeep];
+    NSLog(@"(%lu)> start %@ at %@", (unsigned long)[self deep], self, NSStringFromSelector(_cmd));
     
     // 建立 invocation, 並填入變數
     va_list list;
@@ -428,7 +429,6 @@ unsigned short unsignedShortMethodIMP(id self, SEL _cmd, ...)
     
     // 運行
     NSTimeInterval startTime = [[NSDate date] timeIntervalSince1970];
-    NSLog(@"(%lu)> start %@ at %@", (unsigned long)[self deep], self, NSStringFromSelector(_cmd));
     [invocation invoke];
     NSLog(@"(%lu)> finish %@ at %@, use %fs", (unsigned long)[self deep], self, NSStringFromSelector(_cmd), [[NSDate date] timeIntervalSince1970] - startTime);
     
@@ -444,6 +444,7 @@ unsigned short unsignedShortMethodIMP(id self, SEL _cmd, ...)
 unsigned long unsignedLongMethodIMP(id self, SEL _cmd, ...)
 {
     [self incDeep];
+    NSLog(@"(%lu)> start %@ at %@", (unsigned long)[self deep], self, NSStringFromSelector(_cmd));
     
     // 建立 invocation, 並填入變數
     va_list list;
@@ -453,7 +454,6 @@ unsigned long unsignedLongMethodIMP(id self, SEL _cmd, ...)
     
     // 運行
     NSTimeInterval startTime = [[NSDate date] timeIntervalSince1970];
-    NSLog(@"(%lu)> start %@ at %@", (unsigned long)[self deep], self, NSStringFromSelector(_cmd));
     [invocation invoke];
     NSLog(@"(%lu)> finish %@ at %@, use %fs", (unsigned long)[self deep], self, NSStringFromSelector(_cmd), [[NSDate date] timeIntervalSince1970] - startTime);
     
@@ -469,6 +469,7 @@ unsigned long unsignedLongMethodIMP(id self, SEL _cmd, ...)
 unsigned long long unsignedLongLongMethodIMP(id self, SEL _cmd, ...)
 {
     [self incDeep];
+    NSLog(@"(%lu)> start %@ at %@", (unsigned long)[self deep], self, NSStringFromSelector(_cmd));
     
     // 建立 invocation, 並填入變數
     va_list list;
@@ -478,7 +479,6 @@ unsigned long long unsignedLongLongMethodIMP(id self, SEL _cmd, ...)
     
     // 運行
     NSTimeInterval startTime = [[NSDate date] timeIntervalSince1970];
-    NSLog(@"(%lu)> start %@ at %@", (unsigned long)[self deep], self, NSStringFromSelector(_cmd));
     [invocation invoke];
     NSLog(@"(%lu)> finish %@ at %@, use %fs", (unsigned long)[self deep], self, NSStringFromSelector(_cmd), [[NSDate date] timeIntervalSince1970] - startTime);
     
@@ -494,6 +494,7 @@ unsigned long long unsignedLongLongMethodIMP(id self, SEL _cmd, ...)
 float floatMethodIMP(id self, SEL _cmd, ...)
 {
     [self incDeep];
+    NSLog(@"(%lu)> start %@ at %@", (unsigned long)[self deep], self, NSStringFromSelector(_cmd));
     
     // 建立 invocation, 並填入變數
     va_list list;
@@ -503,7 +504,6 @@ float floatMethodIMP(id self, SEL _cmd, ...)
     
     // 運行
     NSTimeInterval startTime = [[NSDate date] timeIntervalSince1970];
-    NSLog(@"(%lu)> start %@ at %@", (unsigned long)[self deep], self, NSStringFromSelector(_cmd));
     [invocation invoke];
     NSLog(@"(%lu)> finish %@ at %@, use %fs", (unsigned long)[self deep], self, NSStringFromSelector(_cmd), [[NSDate date] timeIntervalSince1970] - startTime);
     
@@ -519,6 +519,7 @@ float floatMethodIMP(id self, SEL _cmd, ...)
 double doubleMethodIMP(id self, SEL _cmd, ...)
 {
     [self incDeep];
+    NSLog(@"(%lu)> start %@ at %@", (unsigned long)[self deep], self, NSStringFromSelector(_cmd));
     
     // 建立 invocation, 並填入變數
     va_list list;
@@ -528,7 +529,6 @@ double doubleMethodIMP(id self, SEL _cmd, ...)
     
     // 運行
     NSTimeInterval startTime = [[NSDate date] timeIntervalSince1970];
-    NSLog(@"(%lu)> start %@ at %@", (unsigned long)[self deep], self, NSStringFromSelector(_cmd));
     [invocation invoke];
     NSLog(@"(%lu)> finish %@ at %@, use %fs", (unsigned long)[self deep], self, NSStringFromSelector(_cmd), [[NSDate date] timeIntervalSince1970] - startTime);
     
@@ -544,6 +544,7 @@ double doubleMethodIMP(id self, SEL _cmd, ...)
 BOOL boolMethodIMP(id self, SEL _cmd, ...)
 {
     [self incDeep];
+    NSLog(@"(%lu)> start %@ at %@", (unsigned long)[self deep], self, NSStringFromSelector(_cmd));
     
     // 建立 invocation, 並填入變數
     va_list list;
@@ -553,7 +554,6 @@ BOOL boolMethodIMP(id self, SEL _cmd, ...)
     
     // 運行
     NSTimeInterval startTime = [[NSDate date] timeIntervalSince1970];
-    NSLog(@"(%lu)> start %@ at %@", (unsigned long)[self deep], self, NSStringFromSelector(_cmd));
     [invocation invoke];
     NSLog(@"(%lu)> finish %@ at %@, use %fs", (unsigned long)[self deep], self, NSStringFromSelector(_cmd), [[NSDate date] timeIntervalSince1970] - startTime);
     
@@ -569,6 +569,7 @@ BOOL boolMethodIMP(id self, SEL _cmd, ...)
 void voidMethodIMP(id self, SEL _cmd, ...)
 {
     [self incDeep];
+    NSLog(@"(%lu)> start %@ at %@", (unsigned long)[self deep], self, NSStringFromSelector(_cmd));
     
     // 建立 invocation, 並填入變數
     va_list list;
@@ -578,7 +579,6 @@ void voidMethodIMP(id self, SEL _cmd, ...)
     
     // 運行
     NSTimeInterval startTime = [[NSDate date] timeIntervalSince1970];
-    NSLog(@"(%lu)> start %@ at %@", (unsigned long)[self deep], self, NSStringFromSelector(_cmd));
     [invocation invoke];
     NSLog(@"(%lu)> finish %@ at %@, use %fs", (unsigned long)[self deep], self, NSStringFromSelector(_cmd), [[NSDate date] timeIntervalSince1970] - startTime);
     
@@ -588,6 +588,7 @@ void voidMethodIMP(id self, SEL _cmd, ...)
 char *charPointerMethodIMP(id self, SEL _cmd, ...)
 {
     [self incDeep];
+    NSLog(@"(%lu)> start %@ at %@", (unsigned long)[self deep], self, NSStringFromSelector(_cmd));
     
     // 建立 invocation, 並填入變數
     va_list list;
@@ -597,7 +598,6 @@ char *charPointerMethodIMP(id self, SEL _cmd, ...)
     
     // 運行
     NSTimeInterval startTime = [[NSDate date] timeIntervalSince1970];
-    NSLog(@"(%lu)> start %@ at %@", (unsigned long)[self deep], self, NSStringFromSelector(_cmd));
     [invocation invoke];
     NSLog(@"(%lu)> finish %@ at %@, use %fs", (unsigned long)[self deep], self, NSStringFromSelector(_cmd), [[NSDate date] timeIntervalSince1970] - startTime);
     
@@ -613,6 +613,7 @@ char *charPointerMethodIMP(id self, SEL _cmd, ...)
 id idMethodIMP(id self, SEL _cmd, ...)
 {
     [self incDeep];
+    NSLog(@"(%lu)> start %@ at %@", (unsigned long)[self deep], self, NSStringFromSelector(_cmd));
     
     // 建立 invocation, 並填入變數
     va_list list;
@@ -622,7 +623,6 @@ id idMethodIMP(id self, SEL _cmd, ...)
     
     // 運行
     NSTimeInterval startTime = [[NSDate date] timeIntervalSince1970];
-    NSLog(@"(%lu)> start %@ at %@", (unsigned long)[self deep], self, NSStringFromSelector(_cmd));
     [invocation invoke];
     NSLog(@"(%lu)> finish %@ at %@, use %fs", (unsigned long)[self deep], self, NSStringFromSelector(_cmd), [[NSDate date] timeIntervalSince1970] - startTime);
     
@@ -638,6 +638,7 @@ id idMethodIMP(id self, SEL _cmd, ...)
 Class classMethodIMP(id self, SEL _cmd, ...)
 {
     [self incDeep];
+    NSLog(@"(%lu)> start %@ at %@", (unsigned long)[self deep], self, NSStringFromSelector(_cmd));
     
     // 建立 invocation, 並填入變數
     va_list list;
@@ -647,7 +648,6 @@ Class classMethodIMP(id self, SEL _cmd, ...)
     
     // 運行
     NSTimeInterval startTime = [[NSDate date] timeIntervalSince1970];
-    NSLog(@"(%lu)> start %@ at %@", (unsigned long)[self deep], self, NSStringFromSelector(_cmd));
     [invocation invoke];
     NSLog(@"(%lu)> finish %@ at %@, use %fs", (unsigned long)[self deep], self, NSStringFromSelector(_cmd), [[NSDate date] timeIntervalSince1970] - startTime);
     
@@ -663,6 +663,7 @@ Class classMethodIMP(id self, SEL _cmd, ...)
 SEL selMethodIMP(id self, SEL _cmd, ...)
 {
     [self incDeep];
+    NSLog(@"(%lu)> start %@ at %@", (unsigned long)[self deep], self, NSStringFromSelector(_cmd));
     
     // 建立 invocation, 並填入變數
     va_list list;
@@ -672,7 +673,6 @@ SEL selMethodIMP(id self, SEL _cmd, ...)
     
     // 運行
     NSTimeInterval startTime = [[NSDate date] timeIntervalSince1970];
-    NSLog(@"(%lu)> start %@ at %@", (unsigned long)[self deep], self, NSStringFromSelector(_cmd));
     [invocation invoke];
     NSLog(@"(%lu)> finish %@ at %@, use %fs", (unsigned long)[self deep], self, NSStringFromSelector(_cmd), [[NSDate date] timeIntervalSince1970] - startTime);
     
@@ -688,6 +688,7 @@ SEL selMethodIMP(id self, SEL _cmd, ...)
 CGRect cgRectMethodIMP(id self, SEL _cmd, ...)
 {
     [self incDeep];
+    NSLog(@"(%lu)> start %@ at %@", (unsigned long)[self deep], self, NSStringFromSelector(_cmd));
     
     // 建立 invocation, 並填入變數
     va_list list;
@@ -697,7 +698,6 @@ CGRect cgRectMethodIMP(id self, SEL _cmd, ...)
     
     // 運行
     NSTimeInterval startTime = [[NSDate date] timeIntervalSince1970];
-    NSLog(@"(%lu)> start %@ at %@", (unsigned long)[self deep], self, NSStringFromSelector(_cmd));
     [invocation invoke];
     NSLog(@"(%lu)> finish %@ at %@, use %fs", (unsigned long)[self deep], self, NSStringFromSelector(_cmd), [[NSDate date] timeIntervalSince1970] - startTime);
     
@@ -713,6 +713,7 @@ CGRect cgRectMethodIMP(id self, SEL _cmd, ...)
 CGPoint cgPointMethodIMP(id self, SEL _cmd, ...)
 {
     [self incDeep];
+    NSLog(@"(%lu)> start %@ at %@", (unsigned long)[self deep], self, NSStringFromSelector(_cmd));
     
     // 建立 invocation, 並填入變數
     va_list list;
@@ -722,7 +723,6 @@ CGPoint cgPointMethodIMP(id self, SEL _cmd, ...)
     
     // 運行
     NSTimeInterval startTime = [[NSDate date] timeIntervalSince1970];
-    NSLog(@"(%lu)> start %@ at %@", (unsigned long)[self deep], self, NSStringFromSelector(_cmd));
     [invocation invoke];
     NSLog(@"(%lu)> finish %@ at %@, use %fs", (unsigned long)[self deep], self, NSStringFromSelector(_cmd), [[NSDate date] timeIntervalSince1970] - startTime);
     
@@ -738,6 +738,7 @@ CGPoint cgPointMethodIMP(id self, SEL _cmd, ...)
 CGSize cgSizeMethodIMP(id self, SEL _cmd, ...)
 {
     [self incDeep];
+    NSLog(@"(%lu)> start %@ at %@", (unsigned long)[self deep], self, NSStringFromSelector(_cmd));
     
     // 建立 invocation, 並填入變數
     va_list list;
@@ -747,7 +748,6 @@ CGSize cgSizeMethodIMP(id self, SEL _cmd, ...)
     
     // 運行
     NSTimeInterval startTime = [[NSDate date] timeIntervalSince1970];
-    NSLog(@"(%lu)> start %@ at %@", (unsigned long)[self deep], self, NSStringFromSelector(_cmd));
     [invocation invoke];
     NSLog(@"(%lu)> finish %@ at %@, use %fs", (unsigned long)[self deep], self, NSStringFromSelector(_cmd), [[NSDate date] timeIntervalSince1970] - startTime);
     
@@ -763,6 +763,7 @@ CGSize cgSizeMethodIMP(id self, SEL _cmd, ...)
 CGAffineTransform cgAffineTransformMethodIMP(id self, SEL _cmd, ...)
 {
     [self incDeep];
+    NSLog(@"(%lu)> start %@ at %@", (unsigned long)[self deep], self, NSStringFromSelector(_cmd));
     
     // 建立 invocation, 並填入變數
     va_list list;
@@ -772,7 +773,6 @@ CGAffineTransform cgAffineTransformMethodIMP(id self, SEL _cmd, ...)
     
     // 運行
     NSTimeInterval startTime = [[NSDate date] timeIntervalSince1970];
-    NSLog(@"(%lu)> start %@ at %@", (unsigned long)[self deep], self, NSStringFromSelector(_cmd));
     [invocation invoke];
     NSLog(@"(%lu)> finish %@ at %@, use %fs", (unsigned long)[self deep], self, NSStringFromSelector(_cmd), [[NSDate date] timeIntervalSince1970] - startTime);
     
@@ -788,6 +788,7 @@ CGAffineTransform cgAffineTransformMethodIMP(id self, SEL _cmd, ...)
 UIEdgeInsets uiEdgeInsetsMethodIMP(id self, SEL _cmd, ...)
 {
     [self incDeep];
+    NSLog(@"(%lu)> start %@ at %@", (unsigned long)[self deep], self, NSStringFromSelector(_cmd));
     
     // 建立 invocation, 並填入變數
     va_list list;
@@ -797,7 +798,6 @@ UIEdgeInsets uiEdgeInsetsMethodIMP(id self, SEL _cmd, ...)
     
     // 運行
     NSTimeInterval startTime = [[NSDate date] timeIntervalSince1970];
-    NSLog(@"(%lu)> start %@ at %@", (unsigned long)[self deep], self, NSStringFromSelector(_cmd));
     [invocation invoke];
     NSLog(@"(%lu)> finish %@ at %@, use %fs", (unsigned long)[self deep], self, NSStringFromSelector(_cmd), [[NSDate date] timeIntervalSince1970] - startTime);
     
@@ -813,6 +813,7 @@ UIEdgeInsets uiEdgeInsetsMethodIMP(id self, SEL _cmd, ...)
 UIOffset uiOffsetMethodIMP(id self, SEL _cmd, ...)
 {
     [self incDeep];
+    NSLog(@"(%lu)> start %@ at %@", (unsigned long)[self deep], self, NSStringFromSelector(_cmd));
     
     // 建立 invocation, 並填入變數
     va_list list;
@@ -822,7 +823,6 @@ UIOffset uiOffsetMethodIMP(id self, SEL _cmd, ...)
     
     // 運行
     NSTimeInterval startTime = [[NSDate date] timeIntervalSince1970];
-    NSLog(@"(%lu)> start %@ at %@", (unsigned long)[self deep], self, NSStringFromSelector(_cmd));
     [invocation invoke];
     NSLog(@"(%lu)> finish %@ at %@, use %fs", (unsigned long)[self deep], self, NSStringFromSelector(_cmd), [[NSDate date] timeIntervalSince1970] - startTime);
     
