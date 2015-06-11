@@ -50,10 +50,10 @@
 		char dst[dstLength];
 		method_getReturnType(methodList[i], dst, dstLength);
         
-        // do not swizlling dealloc
-		if ([NSStringFromSelector(method_getName(methodList[i])) isEqualToString:@"dealloc"]) {
-			continue;
-		}
+        // do not swizzling some method
+        if ([self isNeedAvoid:NSStringFromSelector(method_getName(methodList[i]))]) {
+            continue;
+        }
         
         // prepare required arguments
 		DaiMethodTracingType returnType = tracingType([NSString stringWithCString:dst encoding:NSUTF8StringEncoding]);
@@ -205,6 +205,20 @@
         objc_setAssociatedObject(self, _cmd, [NSMutableDictionary dictionary], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     });
     return objc_getAssociatedObject(self, _cmd);
+}
+
++ (BOOL)isNeedAvoid:(NSString *)methodName {
+    static NSArray *avoids = nil;
+    if (!avoids) {
+        avoids = @[@"dealloc", @"retain", @"release", @"Retain"];
+    }
+    
+    for (NSString *avoid in avoids) {
+        if ([methodName rangeOfString:avoid].location != NSNotFound) {
+            return YES;
+        }
+    }
+    return NO;
 }
 
 @end
