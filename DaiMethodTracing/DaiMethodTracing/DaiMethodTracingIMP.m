@@ -12,12 +12,11 @@
 
 #import "DaiMethodTracingDefine.h"
 #import "DaiMethodTracingType.h"
-#import "NSObject+MethodDeep.h"
 #import "DaiSugarCoating.h"
 
 #pragma mark - private function
 
-NSInvocation *createInvocation(id self, SEL _cmd, va_list list)
+NSInvocation *createInvocation(id self, SEL _cmd, va_list list, NSString *deep)
 {
     NSString *methodName = NSStringFromSelector(_cmd);
     SEL swizzlingSelector = NSSelectorFromString([NSString stringWithFormat:@"%@%@", swizzlingPrefix, methodName]);
@@ -29,7 +28,7 @@ NSInvocation *createInvocation(id self, SEL _cmd, va_list list)
     for (NSUInteger i = 2; i < invocation.methodSignature.numberOfArguments; i++) {
         NSMutableString *argumentLogString = [NSMutableString string];
         
-        [argumentLogString appendFormat:@"(%lu)> ", (unsigned long)[invocation.target deep]];
+        [argumentLogString appendFormat:@"(StackSymbol %@)> arg%td ", deep, i - 1];
         
         switch (tracingType([NSString stringWithCString:[invocation.methodSignature getArgumentTypeAtIndex:i]
                                                 encoding:NSUTF8StringEncoding])) {
@@ -241,596 +240,578 @@ NSInvocation *createInvocation(id self, SEL _cmd, va_list list)
 
 #pragma mark - public function
 
+NSString *stackSymbol()
+{
+    NSString *stackSymbol = [[NSThread callStackSymbols] lastObject];
+    NSArray *splitStackSymbol = [stackSymbol componentsSeparatedByString:@" "];
+    return [splitStackSymbol firstObject];
+}
+
 char charMethodIMP(id self, SEL _cmd, ...)
 {
-    [self incDeep];
-    NSLog(@"(%lu)> start %@ at %@", (unsigned long)[self deep], self, NSStringFromSelector(_cmd));
+    NSString *deep = stackSymbol();
+    NSLog(@"(StackSymbol %@)> start %@ at %@", deep, self, NSStringFromSelector(_cmd));
     
     // 建立 invocation, 並填入變數
     va_list list;
     va_start(list, _cmd);
-    NSInvocation *invocation = createInvocation(self, _cmd, list);
+    NSInvocation *invocation = createInvocation(self, _cmd, list, deep);
     va_end(list);
     
     // 運行
     NSTimeInterval startTime = [[NSDate date] timeIntervalSince1970];
     [invocation invoke];
-    NSLog(@"(%lu)> finish %@ at %@, use %fs", (unsigned long)[self deep], self, NSStringFromSelector(_cmd), [[NSDate date] timeIntervalSince1970] - startTime);
     
     // 處理回傳值
     char returnValue;
     [invocation getReturnValue:&returnValue];
-    NSLog(@"(%lu)> return %c", (unsigned long)[self deep], returnValue);
+    NSLog(@"(StackSymbol %@)> return %c", deep, returnValue);
     
-    [self decDeep];
+    NSLog(@"(StackSymbol %@)> finish %@ at %@, use %fs", deep, self, NSStringFromSelector(_cmd), [[NSDate date] timeIntervalSince1970] - startTime);
     return returnValue;
 }
 
 int intMethodIMP(id self, SEL _cmd, ...)
 {
-    [self incDeep];
-    NSLog(@"(%lu)> start %@ at %@", (unsigned long)[self deep], self, NSStringFromSelector(_cmd));
+    NSString *deep = stackSymbol();
+    NSLog(@"(StackSymbol %@)> start %@ at %@", deep, self, NSStringFromSelector(_cmd));
     
     // 建立 invocation, 並填入變數
     va_list list;
     va_start(list, _cmd);
-    NSInvocation *invocation = createInvocation(self, _cmd, list);
+    NSInvocation *invocation = createInvocation(self, _cmd, list, deep);
     va_end(list);
     
     // 運行
     NSTimeInterval startTime = [[NSDate date] timeIntervalSince1970];
     [invocation invoke];
-    NSLog(@"(%lu)> finish %@ at %@, use %fs", (unsigned long)[self deep], self, NSStringFromSelector(_cmd), [[NSDate date] timeIntervalSince1970] - startTime);
     
     // 處理回傳值
     int returnValue;
     [invocation getReturnValue:&returnValue];
-    NSLog(@"(%lu)> return %i", (unsigned long)[self deep], returnValue);
+    NSLog(@"(StackSymbol %@)> return %c", deep, returnValue);
     
-    [self decDeep];
+    NSLog(@"(StackSymbol %@)> finish %@ at %@, use %fs", deep, self, NSStringFromSelector(_cmd), [[NSDate date] timeIntervalSince1970] - startTime);
     return returnValue;
 }
 
 short shortMethodIMP(id self, SEL _cmd, ...)
 {
-    [self incDeep];
-    NSLog(@"(%lu)> start %@ at %@", (unsigned long)[self deep], self, NSStringFromSelector(_cmd));
+    NSString *deep = stackSymbol();
+    NSLog(@"(StackSymbol %@)> start %@ at %@", deep, self, NSStringFromSelector(_cmd));
     
     // 建立 invocation, 並填入變數
     va_list list;
     va_start(list, _cmd);
-    NSInvocation *invocation = createInvocation(self, _cmd, list);
+    NSInvocation *invocation = createInvocation(self, _cmd, list, deep);
     va_end(list);
     
     // 運行
     NSTimeInterval startTime = [[NSDate date] timeIntervalSince1970];
     [invocation invoke];
-    NSLog(@"(%lu)> finish %@ at %@, use %fs", (unsigned long)[self deep], self, NSStringFromSelector(_cmd), [[NSDate date] timeIntervalSince1970] - startTime);
     
     // 處理回傳值
     short returnValue;
     [invocation getReturnValue:&returnValue];
-    NSLog(@"(%lu)> return %i", (unsigned long)[self deep], returnValue);
+    NSLog(@"(StackSymbol %@)> return %c", deep, returnValue);
     
-    [self decDeep];
+    NSLog(@"(StackSymbol %@)> finish %@ at %@, use %fs", deep, self, NSStringFromSelector(_cmd), [[NSDate date] timeIntervalSince1970] - startTime);
     return returnValue;
 }
 
 long longMethodIMP(id self, SEL _cmd, ...)
 {
-    [self incDeep];
-    NSLog(@"(%lu)> start %@ at %@", (unsigned long)[self deep], self, NSStringFromSelector(_cmd));
+    NSString *deep = stackSymbol();
+    NSLog(@"(StackSymbol %@)> start %@ at %@", deep, self, NSStringFromSelector(_cmd));
     
     // 建立 invocation, 並填入變數
     va_list list;
     va_start(list, _cmd);
-    NSInvocation *invocation = createInvocation(self, _cmd, list);
+    NSInvocation *invocation = createInvocation(self, _cmd, list, deep);
     va_end(list);
     
     // 運行
     NSTimeInterval startTime = [[NSDate date] timeIntervalSince1970];
     [invocation invoke];
-    NSLog(@"(%lu)> finish %@ at %@, use %fs", (unsigned long)[self deep], self, NSStringFromSelector(_cmd), [[NSDate date] timeIntervalSince1970] - startTime);
     
     // 處理回傳值
     long returnValue;
     [invocation getReturnValue:&returnValue];
-    NSLog(@"(%lu)> return %ld", (unsigned long)[self deep], returnValue);
+    NSLog(@"(StackSymbol %@)> return %ld", deep, returnValue);
     
-    [self decDeep];
+    NSLog(@"(StackSymbol %@)> finish %@ at %@, use %fs", deep, self, NSStringFromSelector(_cmd), [[NSDate date] timeIntervalSince1970] - startTime);
     return returnValue;
 }
 
 long long longlongMethodIMP(id self, SEL _cmd, ...)
 {
-    [self incDeep];
-    NSLog(@"(%lu)> start %@ at %@", (unsigned long)[self deep], self, NSStringFromSelector(_cmd));
+    NSString *deep = stackSymbol();
+    NSLog(@"(StackSymbol %@)> start %@ at %@", deep, self, NSStringFromSelector(_cmd));
     
     // 建立 invocation, 並填入變數
     va_list list;
     va_start(list, _cmd);
-    NSInvocation *invocation = createInvocation(self, _cmd, list);
+    NSInvocation *invocation = createInvocation(self, _cmd, list, deep);
     va_end(list);
     
     // 運行
     NSTimeInterval startTime = [[NSDate date] timeIntervalSince1970];
     [invocation invoke];
-    NSLog(@"(%lu)> finish %@ at %@, use %fs", (unsigned long)[self deep], self, NSStringFromSelector(_cmd), [[NSDate date] timeIntervalSince1970] - startTime);
     
     // 處理回傳值
     long long returnValue;
     [invocation getReturnValue:&returnValue];
-    NSLog(@"(%lu)> return %lld", (unsigned long)[self deep], returnValue);
+    NSLog(@"(StackSymbol %@)> return %lld", deep, returnValue);
     
-    [self decDeep];
+    NSLog(@"(StackSymbol %@)> finish %@ at %@, use %fs", deep, self, NSStringFromSelector(_cmd), [[NSDate date] timeIntervalSince1970] - startTime);
     return returnValue;
 }
 
 unsigned char unsignedCharMethodIMP(id self, SEL _cmd, ...)
 {
-    [self incDeep];
-    NSLog(@"(%lu)> start %@ at %@", (unsigned long)[self deep], self, NSStringFromSelector(_cmd));
+    NSString *deep = stackSymbol();
+    NSLog(@"(StackSymbol %@)> start %@ at %@", deep, self, NSStringFromSelector(_cmd));
     
     // 建立 invocation, 並填入變數
     va_list list;
     va_start(list, _cmd);
-    NSInvocation *invocation = createInvocation(self, _cmd, list);
+    NSInvocation *invocation = createInvocation(self, _cmd, list, deep);
     va_end(list);
     
     // 運行
     NSTimeInterval startTime = [[NSDate date] timeIntervalSince1970];
     [invocation invoke];
-    NSLog(@"(%lu)> finish %@ at %@, use %fs", (unsigned long)[self deep], self, NSStringFromSelector(_cmd), [[NSDate date] timeIntervalSince1970] - startTime);
     
     // 處理回傳值
     unsigned char returnValue;
     [invocation getReturnValue:&returnValue];
-    NSLog(@"(%lu)> return %c", (unsigned long)[self deep], returnValue);
+    NSLog(@"(StackSymbol %@)> return %c", deep, returnValue);
     
-    [self decDeep];
+    NSLog(@"(StackSymbol %@)> finish %@ at %@, use %fs", deep, self, NSStringFromSelector(_cmd), [[NSDate date] timeIntervalSince1970] - startTime);
     return returnValue;
 }
 
 unsigned int unsignedIntMethodIMP(id self, SEL _cmd, ...)
 {
-    [self incDeep];
-    NSLog(@"(%lu)> start %@ at %@", (unsigned long)[self deep], self, NSStringFromSelector(_cmd));
+    NSString *deep = stackSymbol();
+    NSLog(@"(StackSymbol %@)> start %@ at %@", deep, self, NSStringFromSelector(_cmd));
     
     // 建立 invocation, 並填入變數
     va_list list;
     va_start(list, _cmd);
-    NSInvocation *invocation = createInvocation(self, _cmd, list);
+    NSInvocation *invocation = createInvocation(self, _cmd, list, deep);
     va_end(list);
     
     // 運行
     NSTimeInterval startTime = [[NSDate date] timeIntervalSince1970];
     [invocation invoke];
-    NSLog(@"(%lu)> finish %@ at %@, use %fs", (unsigned long)[self deep], self, NSStringFromSelector(_cmd), [[NSDate date] timeIntervalSince1970] - startTime);
     
     // 處理回傳值
     unsigned int returnValue;
     [invocation getReturnValue:&returnValue];
-    NSLog(@"(%lu)> return %i", (unsigned long)[self deep], returnValue);
+    NSLog(@"(StackSymbol %@)> return %c", deep, returnValue);
     
-    [self decDeep];
+    NSLog(@"(StackSymbol %@)> finish %@ at %@, use %fs", deep, self, NSStringFromSelector(_cmd), [[NSDate date] timeIntervalSince1970] - startTime);
     return returnValue;
 }
 
 unsigned short unsignedShortMethodIMP(id self, SEL _cmd, ...)
 {
-    [self incDeep];
-    NSLog(@"(%lu)> start %@ at %@", (unsigned long)[self deep], self, NSStringFromSelector(_cmd));
+    NSString *deep = stackSymbol();
+    NSLog(@"(StackSymbol %@)> start %@ at %@", deep, self, NSStringFromSelector(_cmd));
     
     // 建立 invocation, 並填入變數
     va_list list;
     va_start(list, _cmd);
-    NSInvocation *invocation = createInvocation(self, _cmd, list);
+    NSInvocation *invocation = createInvocation(self, _cmd, list, deep);
     va_end(list);
     
     // 運行
     NSTimeInterval startTime = [[NSDate date] timeIntervalSince1970];
     [invocation invoke];
-    NSLog(@"(%lu)> finish %@ at %@, use %fs", (unsigned long)[self deep], self, NSStringFromSelector(_cmd), [[NSDate date] timeIntervalSince1970] - startTime);
     
     // 處理回傳值
     unsigned short returnValue;
     [invocation getReturnValue:&returnValue];
-    NSLog(@"(%lu)> return %i", (unsigned long)[self deep], returnValue);
+    NSLog(@"(StackSymbol %@)> return %c", deep, returnValue);
     
-    [self decDeep];
+    NSLog(@"(StackSymbol %@)> finish %@ at %@, use %fs", deep, self, NSStringFromSelector(_cmd), [[NSDate date] timeIntervalSince1970] - startTime);
     return returnValue;
 }
 
 unsigned long unsignedLongMethodIMP(id self, SEL _cmd, ...)
 {
-    [self incDeep];
-    NSLog(@"(%lu)> start %@ at %@", (unsigned long)[self deep], self, NSStringFromSelector(_cmd));
+    NSString *deep = stackSymbol();
+    NSLog(@"(StackSymbol %@)> start %@ at %@", deep, self, NSStringFromSelector(_cmd));
     
     // 建立 invocation, 並填入變數
     va_list list;
     va_start(list, _cmd);
-    NSInvocation *invocation = createInvocation(self, _cmd, list);
+    NSInvocation *invocation = createInvocation(self, _cmd, list, deep);
     va_end(list);
     
     // 運行
     NSTimeInterval startTime = [[NSDate date] timeIntervalSince1970];
     [invocation invoke];
-    NSLog(@"(%lu)> finish %@ at %@, use %fs", (unsigned long)[self deep], self, NSStringFromSelector(_cmd), [[NSDate date] timeIntervalSince1970] - startTime);
     
     // 處理回傳值
     unsigned long returnValue;
     [invocation getReturnValue:&returnValue];
-    NSLog(@"(%lu)> return %lu", (unsigned long)[self deep], returnValue);
+    NSLog(@"(StackSymbol %@)> return %lu", deep, returnValue);
     
-    [self decDeep];
+    NSLog(@"(StackSymbol %@)> finish %@ at %@, use %fs", deep, self, NSStringFromSelector(_cmd), [[NSDate date] timeIntervalSince1970] - startTime);
     return returnValue;
 }
 
 unsigned long long unsignedLongLongMethodIMP(id self, SEL _cmd, ...)
 {
-    [self incDeep];
-    NSLog(@"(%lu)> start %@ at %@", (unsigned long)[self deep], self, NSStringFromSelector(_cmd));
+    NSString *deep = stackSymbol();
+    NSLog(@"(StackSymbol %@)> start %@ at %@", deep, self, NSStringFromSelector(_cmd));
     
     // 建立 invocation, 並填入變數
     va_list list;
     va_start(list, _cmd);
-    NSInvocation *invocation = createInvocation(self, _cmd, list);
+    NSInvocation *invocation = createInvocation(self, _cmd, list, deep);
     va_end(list);
     
     // 運行
     NSTimeInterval startTime = [[NSDate date] timeIntervalSince1970];
     [invocation invoke];
-    NSLog(@"(%lu)> finish %@ at %@, use %fs", (unsigned long)[self deep], self, NSStringFromSelector(_cmd), [[NSDate date] timeIntervalSince1970] - startTime);
     
     // 處理回傳值
     unsigned long long returnValue;
     [invocation getReturnValue:&returnValue];
-    NSLog(@"(%lu)> return %llu", (unsigned long)[self deep], returnValue);
+    NSLog(@"(StackSymbol %@)> return %llu", deep, returnValue);
     
-    [self decDeep];
+    NSLog(@"(StackSymbol %@)> finish %@ at %@, use %fs", deep, self, NSStringFromSelector(_cmd), [[NSDate date] timeIntervalSince1970] - startTime);
     return returnValue;
 }
 
 float floatMethodIMP(id self, SEL _cmd, ...)
 {
-    [self incDeep];
-    NSLog(@"(%lu)> start %@ at %@", (unsigned long)[self deep], self, NSStringFromSelector(_cmd));
+    NSString *deep = stackSymbol();
+    NSLog(@"(StackSymbol %@)> start %@ at %@", deep, self, NSStringFromSelector(_cmd));
     
     // 建立 invocation, 並填入變數
     va_list list;
     va_start(list, _cmd);
-    NSInvocation *invocation = createInvocation(self, _cmd, list);
+    NSInvocation *invocation = createInvocation(self, _cmd, list, deep);
     va_end(list);
     
     // 運行
     NSTimeInterval startTime = [[NSDate date] timeIntervalSince1970];
     [invocation invoke];
-    NSLog(@"(%lu)> finish %@ at %@, use %fs", (unsigned long)[self deep], self, NSStringFromSelector(_cmd), [[NSDate date] timeIntervalSince1970] - startTime);
     
     // 處理回傳值
     float returnValue;
     [invocation getReturnValue:&returnValue];
-    NSLog(@"(%lu)> return %f", (unsigned long)[self deep], returnValue);
+    NSLog(@"(StackSymbol %@)> return %f", deep, returnValue);
     
-    [self decDeep];
+    NSLog(@"(StackSymbol %@)> finish %@ at %@, use %fs", deep, self, NSStringFromSelector(_cmd), [[NSDate date] timeIntervalSince1970] - startTime);
     return returnValue;
 }
 
 double doubleMethodIMP(id self, SEL _cmd, ...)
 {
-    [self incDeep];
-    NSLog(@"(%lu)> start %@ at %@", (unsigned long)[self deep], self, NSStringFromSelector(_cmd));
+    NSString *deep = stackSymbol();
+    NSLog(@"(StackSymbol %@)> start %@ at %@", deep, self, NSStringFromSelector(_cmd));
     
     // 建立 invocation, 並填入變數
     va_list list;
     va_start(list, _cmd);
-    NSInvocation *invocation = createInvocation(self, _cmd, list);
+    NSInvocation *invocation = createInvocation(self, _cmd, list, deep);
     va_end(list);
     
     // 運行
     NSTimeInterval startTime = [[NSDate date] timeIntervalSince1970];
     [invocation invoke];
-    NSLog(@"(%lu)> finish %@ at %@, use %fs", (unsigned long)[self deep], self, NSStringFromSelector(_cmd), [[NSDate date] timeIntervalSince1970] - startTime);
     
     // 處理回傳值
     double returnValue;
     [invocation getReturnValue:&returnValue];
-    NSLog(@"(%lu)> return %f", (unsigned long)[self deep], returnValue);
+    NSLog(@"(StackSymbol %@)> return %f", deep, returnValue);
     
-    [self decDeep];
+    NSLog(@"(StackSymbol %@)> finish %@ at %@, use %fs", deep, self, NSStringFromSelector(_cmd), [[NSDate date] timeIntervalSince1970] - startTime);
     return returnValue;
 }
 
 BOOL boolMethodIMP(id self, SEL _cmd, ...)
 {
-    [self incDeep];
-    NSLog(@"(%lu)> start %@ at %@", (unsigned long)[self deep], self, NSStringFromSelector(_cmd));
+    NSString *deep = stackSymbol();
+    NSLog(@"(StackSymbol %@)> start %@ at %@", deep, self, NSStringFromSelector(_cmd));
     
     // 建立 invocation, 並填入變數
     va_list list;
     va_start(list, _cmd);
-    NSInvocation *invocation = createInvocation(self, _cmd, list);
+    NSInvocation *invocation = createInvocation(self, _cmd, list, deep);
     va_end(list);
     
     // 運行
     NSTimeInterval startTime = [[NSDate date] timeIntervalSince1970];
     [invocation invoke];
-    NSLog(@"(%lu)> finish %@ at %@, use %fs", (unsigned long)[self deep], self, NSStringFromSelector(_cmd), [[NSDate date] timeIntervalSince1970] - startTime);
     
     // 處理回傳值
     BOOL returnValue;
     [invocation getReturnValue:&returnValue];
-    NSLog(@"(%lu)> return %@", (unsigned long)[self deep], returnValue ? @"YES" : @"NO");
+    NSLog(@"(StackSymbol %@)> return %@", deep, returnValue ? @"YES" : @"NO");
     
-    [self decDeep];
+    NSLog(@"(StackSymbol %@)> finish %@ at %@, use %fs", deep, self, NSStringFromSelector(_cmd), [[NSDate date] timeIntervalSince1970] - startTime);
     return returnValue;
 }
 
 void voidMethodIMP(id self, SEL _cmd, ...)
 {
-    [self incDeep];
-    NSLog(@"(%lu)> start %@ at %@", (unsigned long)[self deep], self, NSStringFromSelector(_cmd));
+    NSString *deep = stackSymbol();
+    NSLog(@"(StackSymbol %@)> start %@ at %@", deep, self, NSStringFromSelector(_cmd));
     
     // 建立 invocation, 並填入變數
     va_list list;
     va_start(list, _cmd);
-    NSInvocation *invocation = createInvocation(self, _cmd, list);
+    NSInvocation *invocation = createInvocation(self, _cmd, list, deep);
     va_end(list);
     
     // 運行
     NSTimeInterval startTime = [[NSDate date] timeIntervalSince1970];
     [invocation invoke];
-    NSLog(@"(%lu)> finish %@ at %@, use %fs", (unsigned long)[self deep], self, NSStringFromSelector(_cmd), [[NSDate date] timeIntervalSince1970] - startTime);
-    
-    [self decDeep];
+    NSLog(@"(StackSymbol %@)> finish %@ at %@, use %fs", deep, self, NSStringFromSelector(_cmd), [[NSDate date] timeIntervalSince1970] - startTime);
 }
 
 char *charPointerMethodIMP(id self, SEL _cmd, ...)
 {
-    [self incDeep];
-    NSLog(@"(%lu)> start %@ at %@", (unsigned long)[self deep], self, NSStringFromSelector(_cmd));
+    NSString *deep = stackSymbol();
+    NSLog(@"(StackSymbol %@)> start %@ at %@", deep, self, NSStringFromSelector(_cmd));
     
     // 建立 invocation, 並填入變數
     va_list list;
     va_start(list, _cmd);
-    NSInvocation *invocation = createInvocation(self, _cmd, list);
+    NSInvocation *invocation = createInvocation(self, _cmd, list, deep);
     va_end(list);
     
     // 運行
     NSTimeInterval startTime = [[NSDate date] timeIntervalSince1970];
     [invocation invoke];
-    NSLog(@"(%lu)> finish %@ at %@, use %fs", (unsigned long)[self deep], self, NSStringFromSelector(_cmd), [[NSDate date] timeIntervalSince1970] - startTime);
     
     // 處理回傳值
     char *returnValue;
     [invocation getReturnValue:&returnValue];
-    NSLog(@"(%lu)> return %s", (unsigned long)[self deep], returnValue);
+    NSLog(@"(StackSymbol %@)> return %s", deep, returnValue);
     
-    [self decDeep];
+    NSLog(@"(StackSymbol %@)> finish %@ at %@, use %fs", deep, self, NSStringFromSelector(_cmd), [[NSDate date] timeIntervalSince1970] - startTime);
     return returnValue;
 }
 
 id idMethodIMP(id self, SEL _cmd, ...)
 {
-    [self incDeep];
-    NSLog(@"(%lu)> start %@ at %@", (unsigned long)[self deep], self, NSStringFromSelector(_cmd));
+    NSString *deep = stackSymbol();
+    NSLog(@"(StackSymbol %@)> start %@ at %@", deep, self, NSStringFromSelector(_cmd));
     
     // 建立 invocation, 並填入變數
     va_list list;
     va_start(list, _cmd);
-    NSInvocation *invocation = createInvocation(self, _cmd, list);
+    NSInvocation *invocation = createInvocation(self, _cmd, list, deep);
     va_end(list);
     
     // 運行
     NSTimeInterval startTime = [[NSDate date] timeIntervalSince1970];
     [invocation invoke];
-    NSLog(@"(%lu)> finish %@ at %@, use %fs", (unsigned long)[self deep], self, NSStringFromSelector(_cmd), [[NSDate date] timeIntervalSince1970] - startTime);
     
     // 處理回傳值
     __unsafe_unretained id returnValue;
     [invocation getReturnValue:&returnValue];
-    NSLog(@"(%lu)> return %@", (unsigned long)[self deep], returnValue);
+    NSLog(@"(StackSymbol %@)> return %@", deep, returnValue);
     
-    [self decDeep];
+    NSLog(@"(StackSymbol %@)> finish %@ at %@, use %fs", deep, self, NSStringFromSelector(_cmd), [[NSDate date] timeIntervalSince1970] - startTime);
     return returnValue;
 }
 
 Class classMethodIMP(id self, SEL _cmd, ...)
 {
-    [self incDeep];
-    NSLog(@"(%lu)> start %@ at %@", (unsigned long)[self deep], self, NSStringFromSelector(_cmd));
+    NSString *deep = stackSymbol();
+    NSLog(@"(StackSymbol %@)> start %@ at %@", deep, self, NSStringFromSelector(_cmd));
     
     // 建立 invocation, 並填入變數
     va_list list;
     va_start(list, _cmd);
-    NSInvocation *invocation = createInvocation(self, _cmd, list);
+    NSInvocation *invocation = createInvocation(self, _cmd, list, deep);
     va_end(list);
     
     // 運行
     NSTimeInterval startTime = [[NSDate date] timeIntervalSince1970];
     [invocation invoke];
-    NSLog(@"(%lu)> finish %@ at %@, use %fs", (unsigned long)[self deep], self, NSStringFromSelector(_cmd), [[NSDate date] timeIntervalSince1970] - startTime);
     
     // 處理回傳值
     Class returnValue;
     [invocation getReturnValue:&returnValue];
-    NSLog(@"(%lu)> return %@", (unsigned long)[self deep], returnValue);
+    NSLog(@"(StackSymbol %@)> return %@", deep, returnValue);
     
-    [self decDeep];
+    NSLog(@"(StackSymbol %@)> finish %@ at %@, use %fs", deep, self, NSStringFromSelector(_cmd), [[NSDate date] timeIntervalSince1970] - startTime);
     return returnValue;
 }
 
 SEL selMethodIMP(id self, SEL _cmd, ...)
 {
-    [self incDeep];
-    NSLog(@"(%lu)> start %@ at %@", (unsigned long)[self deep], self, NSStringFromSelector(_cmd));
+    NSString *deep = stackSymbol();
+    NSLog(@"(StackSymbol %@)> start %@ at %@", deep, self, NSStringFromSelector(_cmd));
     
     // 建立 invocation, 並填入變數
     va_list list;
     va_start(list, _cmd);
-    NSInvocation *invocation = createInvocation(self, _cmd, list);
+    NSInvocation *invocation = createInvocation(self, _cmd, list, deep);
     va_end(list);
     
     // 運行
     NSTimeInterval startTime = [[NSDate date] timeIntervalSince1970];
     [invocation invoke];
-    NSLog(@"(%lu)> finish %@ at %@, use %fs", (unsigned long)[self deep], self, NSStringFromSelector(_cmd), [[NSDate date] timeIntervalSince1970] - startTime);
     
     // 處理回傳值
     SEL returnValue;
     [invocation getReturnValue:&returnValue];
-    NSLog(@"(%lu)> return %@", (unsigned long)[self deep], NSStringFromSelector(returnValue));
+    NSLog(@"(StackSymbol %@)> return %@", deep, NSStringFromSelector(returnValue));
     
-    [self decDeep];
+    NSLog(@"(StackSymbol %@)> finish %@ at %@, use %fs", deep, self, NSStringFromSelector(_cmd), [[NSDate date] timeIntervalSince1970] - startTime);
     return returnValue;
 }
 
 CGRect cgRectMethodIMP(id self, SEL _cmd, ...)
 {
-    [self incDeep];
-    NSLog(@"(%lu)> start %@ at %@", (unsigned long)[self deep], self, NSStringFromSelector(_cmd));
+    NSString *deep = stackSymbol();
+    NSLog(@"(StackSymbol %@)> start %@ at %@", deep, self, NSStringFromSelector(_cmd));
     
     // 建立 invocation, 並填入變數
     va_list list;
     va_start(list, _cmd);
-    NSInvocation *invocation = createInvocation(self, _cmd, list);
+    NSInvocation *invocation = createInvocation(self, _cmd, list, deep);
     va_end(list);
     
     // 運行
     NSTimeInterval startTime = [[NSDate date] timeIntervalSince1970];
     [invocation invoke];
-    NSLog(@"(%lu)> finish %@ at %@, use %fs", (unsigned long)[self deep], self, NSStringFromSelector(_cmd), [[NSDate date] timeIntervalSince1970] - startTime);
     
     // 處理回傳值
     CGRect returnValue;
     [invocation getReturnValue:&returnValue];
-    NSLog(@"(%lu)> return %@", (unsigned long)[self deep], NSStringFromCGRect(returnValue));
+    NSLog(@"(StackSymbol %@)> return %@", deep, NSStringFromCGRect(returnValue));
     
-    [self decDeep];
+    NSLog(@"(StackSymbol %@)> finish %@ at %@, use %fs", deep, self, NSStringFromSelector(_cmd), [[NSDate date] timeIntervalSince1970] - startTime);
     return returnValue;
 }
 
 CGPoint cgPointMethodIMP(id self, SEL _cmd, ...)
 {
-    [self incDeep];
-    NSLog(@"(%lu)> start %@ at %@", (unsigned long)[self deep], self, NSStringFromSelector(_cmd));
+    NSString *deep = stackSymbol();
+    NSLog(@"(StackSymbol %@)> start %@ at %@", deep, self, NSStringFromSelector(_cmd));
     
     // 建立 invocation, 並填入變數
     va_list list;
     va_start(list, _cmd);
-    NSInvocation *invocation = createInvocation(self, _cmd, list);
+    NSInvocation *invocation = createInvocation(self, _cmd, list, deep);
     va_end(list);
     
     // 運行
     NSTimeInterval startTime = [[NSDate date] timeIntervalSince1970];
     [invocation invoke];
-    NSLog(@"(%lu)> finish %@ at %@, use %fs", (unsigned long)[self deep], self, NSStringFromSelector(_cmd), [[NSDate date] timeIntervalSince1970] - startTime);
     
     // 處理回傳值
     CGPoint returnValue;
     [invocation getReturnValue:&returnValue];
-    NSLog(@"(%lu)> return %@", (unsigned long)[self deep], NSStringFromCGPoint(returnValue));
+    NSLog(@"(StackSymbol %@)> return %@", deep, NSStringFromCGPoint(returnValue));
     
-    [self decDeep];
+    NSLog(@"(StackSymbol %@)> finish %@ at %@, use %fs", deep, self, NSStringFromSelector(_cmd), [[NSDate date] timeIntervalSince1970] - startTime);
     return returnValue;
 }
 
 CGSize cgSizeMethodIMP(id self, SEL _cmd, ...)
 {
-    [self incDeep];
-    NSLog(@"(%lu)> start %@ at %@", (unsigned long)[self deep], self, NSStringFromSelector(_cmd));
+    NSString *deep = stackSymbol();
+    NSLog(@"(StackSymbol %@)> start %@ at %@", deep, self, NSStringFromSelector(_cmd));
     
     // 建立 invocation, 並填入變數
     va_list list;
     va_start(list, _cmd);
-    NSInvocation *invocation = createInvocation(self, _cmd, list);
+    NSInvocation *invocation = createInvocation(self, _cmd, list, deep);
     va_end(list);
     
     // 運行
     NSTimeInterval startTime = [[NSDate date] timeIntervalSince1970];
     [invocation invoke];
-    NSLog(@"(%lu)> finish %@ at %@, use %fs", (unsigned long)[self deep], self, NSStringFromSelector(_cmd), [[NSDate date] timeIntervalSince1970] - startTime);
     
     // 處理回傳值
     CGSize returnValue;
     [invocation getReturnValue:&returnValue];
-    NSLog(@"(%lu)> return %@", (unsigned long)[self deep], NSStringFromCGSize(returnValue));
+    NSLog(@"(StackSymbol %@)> return %@", deep, NSStringFromCGSize(returnValue));
     
-    [self decDeep];
+    NSLog(@"(StackSymbol %@)> finish %@ at %@, use %fs", deep, self, NSStringFromSelector(_cmd), [[NSDate date] timeIntervalSince1970] - startTime);
     return returnValue;
 }
 
 CGAffineTransform cgAffineTransformMethodIMP(id self, SEL _cmd, ...)
 {
-    [self incDeep];
-    NSLog(@"(%lu)> start %@ at %@", (unsigned long)[self deep], self, NSStringFromSelector(_cmd));
+    NSString *deep = stackSymbol();
+    NSLog(@"(StackSymbol %@)> start %@ at %@", deep, self, NSStringFromSelector(_cmd));
     
     // 建立 invocation, 並填入變數
     va_list list;
     va_start(list, _cmd);
-    NSInvocation *invocation = createInvocation(self, _cmd, list);
+    NSInvocation *invocation = createInvocation(self, _cmd, list, deep);
     va_end(list);
     
     // 運行
     NSTimeInterval startTime = [[NSDate date] timeIntervalSince1970];
     [invocation invoke];
-    NSLog(@"(%lu)> finish %@ at %@, use %fs", (unsigned long)[self deep], self, NSStringFromSelector(_cmd), [[NSDate date] timeIntervalSince1970] - startTime);
     
     // 處理回傳值
     CGAffineTransform returnValue;
     [invocation getReturnValue:&returnValue];
-    NSLog(@"(%lu)> return %@", (unsigned long)[self deep], NSStringFromCGAffineTransform(returnValue));
+    NSLog(@"(StackSymbol %@)> return %@", deep, NSStringFromCGAffineTransform(returnValue));
     
-    [self decDeep];
+    NSLog(@"(StackSymbol %@)> finish %@ at %@, use %fs", deep, self, NSStringFromSelector(_cmd), [[NSDate date] timeIntervalSince1970] - startTime);
     return returnValue;
 }
 
 UIEdgeInsets uiEdgeInsetsMethodIMP(id self, SEL _cmd, ...)
 {
-    [self incDeep];
-    NSLog(@"(%lu)> start %@ at %@", (unsigned long)[self deep], self, NSStringFromSelector(_cmd));
+    NSString *deep = stackSymbol();
+    NSLog(@"(StackSymbol %@)> start %@ at %@", deep, self, NSStringFromSelector(_cmd));
     
     // 建立 invocation, 並填入變數
     va_list list;
     va_start(list, _cmd);
-    NSInvocation *invocation = createInvocation(self, _cmd, list);
+    NSInvocation *invocation = createInvocation(self, _cmd, list, deep);
     va_end(list);
     
     // 運行
     NSTimeInterval startTime = [[NSDate date] timeIntervalSince1970];
     [invocation invoke];
-    NSLog(@"(%lu)> finish %@ at %@, use %fs", (unsigned long)[self deep], self, NSStringFromSelector(_cmd), [[NSDate date] timeIntervalSince1970] - startTime);
     
     // 處理回傳值
     UIEdgeInsets returnValue;
     [invocation getReturnValue:&returnValue];
-    NSLog(@"(%lu)> return %@", (unsigned long)[self deep], NSStringFromUIEdgeInsets(returnValue));
+    NSLog(@"(StackSymbol %@)> return %@", deep, NSStringFromUIEdgeInsets(returnValue));
     
-    [self decDeep];
+    NSLog(@"(StackSymbol %@)> finish %@ at %@, use %fs", deep, self, NSStringFromSelector(_cmd), [[NSDate date] timeIntervalSince1970] - startTime);
     return returnValue;
 }
 
 UIOffset uiOffsetMethodIMP(id self, SEL _cmd, ...)
 {
-    [self incDeep];
-    NSLog(@"(%lu)> start %@ at %@", (unsigned long)[self deep], self, NSStringFromSelector(_cmd));
+    NSString *deep = stackSymbol();
+    NSLog(@"(StackSymbol %@)> start %@ at %@", deep, self, NSStringFromSelector(_cmd));
     
     // 建立 invocation, 並填入變數
     va_list list;
     va_start(list, _cmd);
-    NSInvocation *invocation = createInvocation(self, _cmd, list);
+    NSInvocation *invocation = createInvocation(self, _cmd, list, deep);
     va_end(list);
     
     // 運行
     NSTimeInterval startTime = [[NSDate date] timeIntervalSince1970];
     [invocation invoke];
-    NSLog(@"(%lu)> finish %@ at %@, use %fs", (unsigned long)[self deep], self, NSStringFromSelector(_cmd), [[NSDate date] timeIntervalSince1970] - startTime);
     
     // 處理回傳值
     UIOffset returnValue;
     [invocation getReturnValue:&returnValue];
-    NSLog(@"(%lu)> return %@", (unsigned long)[self deep], NSStringFromUIOffset(returnValue));
+    NSLog(@"(StackSymbol %@)> return %@", deep, NSStringFromUIOffset(returnValue));
     
-    [self decDeep];
+    NSLog(@"(StackSymbol %@)> finish %@ at %@, use %fs", deep, self, NSStringFromSelector(_cmd), [[NSDate date] timeIntervalSince1970] - startTime);
     return returnValue;
 }
