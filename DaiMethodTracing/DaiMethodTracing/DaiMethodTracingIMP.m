@@ -573,6 +573,8 @@ void voidMethodIMP(id self, SEL _cmd, ...)
     // 運行
     NSTimeInterval startTime = [[NSDate date] timeIntervalSince1970];
     [invocation invoke];
+    
+    NSLog(@"(StackSymbol %@)> return void", deep);
     NSLog(@"(StackSymbol %@)> finish %@ at %@, use %fs", deep, self, NSStringFromSelector(_cmd), [[NSDate date] timeIntervalSince1970] - startTime);
 }
 
