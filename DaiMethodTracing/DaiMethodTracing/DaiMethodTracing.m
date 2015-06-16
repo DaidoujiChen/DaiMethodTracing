@@ -13,8 +13,16 @@
 #import "DaiMethodTracingDefine.h"
 #import "DaiMethodTracingIMP.h"
 #import "DaiMethodTracingType.h"
+#import "DaiMethodTracingLog.h"
 
 @implementation DaiMethodTracing
+
+#pragma mark - life cycle
+
++ (void)load
+{
+    [DaiMethodTracingLog simpleMode:YES];
+}
 
 #pragma mark - class method
 
@@ -26,6 +34,11 @@
     } else {
         NSLog(@"this class already in tracing");
     }
+}
+
++ (void)simpleMode:(BOOL)simpleMode
+{
+    [DaiMethodTracingLog simpleMode:simpleMode];
 }
 
 #pragma mark - private class method

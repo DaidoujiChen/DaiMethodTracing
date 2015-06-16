@@ -16,6 +16,7 @@
 #import "DaiMethodTracingType.h"
 #import "DaiMethodTracingIMP.h"
 #import "SFExecuteOnDeallocInternalObject.h"
+#import "DaiMethodTracingLog.h"
 
 typedef void (^BlockInterposer)(NSInvocation *invocation, NSString *deep, void (^call)(void));
 
@@ -96,12 +97,12 @@ enum {
 {
     [invocation setTarget:self.forwardingBlock];
     NSTimeInterval startTime = [[NSDate date] timeIntervalSince1970];
-    NSString *deep = stackSymbol();
-    NSLog(@"(StackSymbol %@)> start <BLOCK: %p> type %@ ", deep, self, [self blockFaces:invocation.methodSignature]);
+    NSString *deep = [DaiMethodTracingLog stackSymbol];
+    [DaiMethodTracingLog tracingLog:[NSString stringWithFormat:@"<BLOCK: %p> type %@ {", self, [DaiMethodTracingLog blockFaces:invocation.methodSignature]] stack:deep logType:DaiMethodTracingLogStart];
     self.interposer(invocation, deep, ^{
         [invocation invokeUsingIMP:[self blockIMP:self.forwardingBlock]];
     });
-    NSLog(@"(StackSymbol %@)> finish <BLOCK: %p> type %@ , use %fs", deep, self, [self blockFaces:invocation.methodSignature], [[NSDate date] timeIntervalSince1970] - startTime);
+    [DaiMethodTracingLog tracingLog:[NSString stringWithFormat:@"} <BLOCK: %p> type %@ , cost %fs", self, [DaiMethodTracingLog blockFaces:invocation.methodSignature], [[NSDate date] timeIntervalSince1970] - startTime] stack:deep logType:DaiMethodTracingLogFinish];
 }
 
 - (id)copyWithZone:(NSZone *)zone
@@ -150,229 +151,6 @@ enum {
     return self;
 }
 
-// 把 block 的原貌還原出來
-- (NSString *)blockFaces:(NSMethodSignature *)signature
-{
-    NSMutableString *blockFacesString = [NSMutableString string];
-    [blockFacesString appendString:@"^"];
-    
-    // 回傳型別
-    NSString *returnType = [NSString stringWithFormat:@"%s", signature.methodReturnType];
-    switch (tracingType(returnType)) {
-        case DaiMethodTracingTypeChar:
-            [blockFacesString appendString:@"char"];
-            break;
-            
-        case DaiMethodTracingTypeInt:
-            [blockFacesString appendString:@"int"];
-            break;
-            
-        case DaiMethodTracingTypeShort:
-            [blockFacesString appendString:@"short"];
-            break;
-            
-        case DaiMethodTracingTypeLong:
-            [blockFacesString appendString:@"long"];
-            break;
-            
-        case DaiMethodTracingTypeLongLong:
-            [blockFacesString appendString:@"long long"];
-            break;
-            
-        case DaiMethodTracingTypeUnsignedChar:
-            [blockFacesString appendString:@"unsigened char"];
-            break;
-            
-        case DaiMethodTracingTypeUnsignedInt:
-            [blockFacesString appendString:@"unsigened int"];
-            break;
-            
-        case DaiMethodTracingTypeUnsignedShort:
-            [blockFacesString appendString:@"unsigened short"];
-            break;
-            
-        case DaiMethodTracingTypeUnsignedLong:
-            [blockFacesString appendString:@"unsigened long"];
-            break;
-            
-        case DaiMethodTracingTypeUnsignedLongLong:
-            [blockFacesString appendString:@"unsigened long long"];
-            break;
-            
-        case DaiMethodTracingTypeFloat:
-            [blockFacesString appendString:@"float"];
-            break;
-            
-        case DaiMethodTracingTypeDouble:
-            [blockFacesString appendString:@"double"];
-            break;
-            
-        case DaiMethodTracingTypeBool:
-            [blockFacesString appendString:@"BOOL"];
-            break;
-            
-        case DaiMethodTracingTypeVoidPointer:
-            [blockFacesString appendFormat:@"%@", voidPointerAnalyze(returnType)];
-            break;
-            
-        case DaiMethodTracingTypeCharPointer:
-            [blockFacesString appendString:@"char*"];
-            break;
-            
-        case DaiMethodTracingTypeObject:
-            [blockFacesString appendFormat:@"%@", objectAnalyze(returnType)];
-            break;
-            
-        case DaiMethodTracingTypeClass:
-            [blockFacesString appendString:@"Class"];
-            break;
-            
-        case DaiMethodTracingTypeSelector:
-            [blockFacesString appendString:@"SEL"];
-            break;
-            
-        case DaiMethodTracingTypeCGRect:
-            [blockFacesString appendString:@"CGRect"];
-            break;
-            
-        case DaiMethodTracingTypeCGPoint:
-            [blockFacesString appendString:@"CGPoint"];
-            break;
-            
-        case DaiMethodTracingTypeCGSize:
-            [blockFacesString appendString:@"CGSize"];
-            break;
-            
-        case DaiMethodTracingTypeCGAffineTransform:
-            [blockFacesString appendString:@"CGAffineTransform"];
-            break;
-            
-        case DaiMethodTracingTypeUIEdgeInsets:
-            [blockFacesString appendString:@"UIEdgeInsets"];
-            break;
-            
-        case DaiMethodTracingTypeUIOffset:
-            [blockFacesString appendString:@"UIOffset"];
-            break;
-            
-        default:
-            [blockFacesString appendString:@"void"];
-            break;
-    }
-    
-    [blockFacesString appendString:@"("];
-    
-    // 各參數型別
-    NSMutableArray *argumentTypes = [NSMutableArray array];
-    for (unsigned i = 1; i < signature.numberOfArguments; i++) {
-        NSString *argumentType = [NSString stringWithFormat:@"%s", [signature getArgumentTypeAtIndex:i]];
-        switch (tracingType(argumentType)) {
-            case DaiMethodTracingTypeChar:
-                [argumentTypes addObject:@"char"];
-                break;
-                
-            case DaiMethodTracingTypeInt:
-                [argumentTypes addObject:@"int"];
-                break;
-                
-            case DaiMethodTracingTypeShort:
-                [argumentTypes addObject:@"short"];
-                break;
-                
-            case DaiMethodTracingTypeLong:
-                [argumentTypes addObject:@"long"];
-                break;
-                
-            case DaiMethodTracingTypeLongLong:
-                [argumentTypes addObject:@"long long"];
-                break;
-                
-            case DaiMethodTracingTypeUnsignedChar:
-                [argumentTypes addObject:@"unsigened char"];
-                break;
-                
-            case DaiMethodTracingTypeUnsignedInt:
-                [argumentTypes addObject:@"unsigened int"];
-                break;
-                
-            case DaiMethodTracingTypeUnsignedShort:
-                [argumentTypes addObject:@"unsigened short"];
-                break;
-                
-            case DaiMethodTracingTypeUnsignedLong:
-                [argumentTypes addObject:@"unsigened long"];
-                break;
-                
-            case DaiMethodTracingTypeUnsignedLongLong:
-                [argumentTypes addObject:@"unsigened long long"];
-                break;
-                
-            case DaiMethodTracingTypeFloat:
-                [argumentTypes addObject:@"float"];
-                break;
-                
-            case DaiMethodTracingTypeDouble:
-                [argumentTypes addObject:@"double"];
-                break;
-                
-            case DaiMethodTracingTypeBool:
-                [argumentTypes addObject:@"BOOL"];
-                break;
-                
-            case DaiMethodTracingTypeVoidPointer:
-                [argumentTypes addObject:voidPointerAnalyze(argumentType)];
-                break;
-                
-            case DaiMethodTracingTypeCharPointer:
-                [argumentTypes addObject:@"char *"];
-                break;
-                
-            case DaiMethodTracingTypeObject:
-                [argumentTypes addObject:objectAnalyze(argumentType)];
-                break;
-                
-            case DaiMethodTracingTypeClass:
-                [argumentTypes addObject:@"Class"];
-                break;
-                
-            case DaiMethodTracingTypeSelector:
-                [argumentTypes addObject:@"SEL"];
-                break;
-                
-            case DaiMethodTracingTypeCGRect:
-                [argumentTypes addObject:@"CGRect"];
-                break;
-                
-            case DaiMethodTracingTypeCGPoint:
-                [argumentTypes addObject:@"CGPoint"];
-                break;
-                
-            case DaiMethodTracingTypeCGSize:
-                [argumentTypes addObject:@"CGSize"];
-                break;
-                
-            case DaiMethodTracingTypeCGAffineTransform:
-                [argumentTypes addObject:@"CGAffineTransform"];
-                break;
-                
-            case DaiMethodTracingTypeUIEdgeInsets:
-                [argumentTypes addObject:@"UIEdgeInsets"];
-                break;
-                
-            case DaiMethodTracingTypeUIOffset:
-                [argumentTypes addObject:@"UIOffset"];
-                break;
-                
-            default:
-                [argumentTypes addObject:@"void"];
-                break;
-        }
-    }
-    [blockFacesString appendFormat:@"%@", [argumentTypes componentsJoinedByString:@", "]];
-    [blockFacesString appendString:@")"];
-    return blockFacesString;
-}
-
 #pragma mark - private class method
 
 + (NSMutableDictionary *)aliveMapping
@@ -396,7 +174,7 @@ enum {
             NSString *argumentType = [NSString stringWithFormat:@"%s", [signature getArgumentTypeAtIndex:i]];
             
             NSMutableString *argumentLogString = [NSMutableString string];
-            [argumentLogString appendFormat:@"(StackSymbol %@)> arg%td ", deep, i];
+            [argumentLogString appendFormat:@"arg%td ", i];
             
             switch (tracingType(argumentType)) {
                 case DaiMethodTracingTypeChar:
@@ -527,7 +305,7 @@ enum {
                         argument = [DaiSugarCoating wrapBlock:argument];
                         [invocation setArgument:&argument atIndex:i];
                     }
-                    [argumentLogString appendFormat:@"(%@) %@", objectAnalyze(argumentType), argument];
+                    [argumentLogString appendFormat:@"(%@) %@", objectAnalyze(argumentType), [DaiMethodTracingLog simpleObject:argument]];
                     break;
                 }
                     
@@ -599,7 +377,7 @@ enum {
                     NSLog(@"%@, %@", NSStringFromSelector([invocation selector]), [NSString stringWithCString:[invocation.methodSignature getArgumentTypeAtIndex:i] encoding:NSUTF8StringEncoding]);
                     break;
             }
-            NSLog(@"%@", argumentLogString);
+            [DaiMethodTracingLog tracingLog:argumentLogString stack:deep logType:DaiMethodTracingLogArgument];
         }
         
         // 判別回傳值型別
@@ -609,7 +387,7 @@ enum {
         
         // 取得回傳值
         NSMutableString *returnLogString = [NSMutableString string];
-        [returnLogString appendFormat:@"(StackSymbol %@)> return ", deep];
+        [returnLogString appendString:@"return "];
         switch (tracingType(returnType)) {
             case DaiMethodTracingTypeChar:
             {
@@ -735,7 +513,7 @@ enum {
             {
                 id argument;
                 [invocation getReturnValue:&argument];
-                [returnLogString appendFormat:@"(%@) %@", objectAnalyze(returnType), argument];
+                [returnLogString appendFormat:@"(%@) %@", objectAnalyze(returnType), [DaiMethodTracingLog simpleObject:argument]];
                 break;
             }
                 
@@ -809,7 +587,7 @@ enum {
             default:
                 break;
         }
-        NSLog(@"%@", returnLogString);
+        [DaiMethodTracingLog tracingLog:returnLogString stack:deep logType:DaiMethodTracingLogReturn];
     }];
 }
 

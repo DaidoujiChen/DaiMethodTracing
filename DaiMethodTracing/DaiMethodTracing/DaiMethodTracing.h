@@ -12,4 +12,7 @@
 
 + (void)tracingClass:(Class)aClass;
 
+// 簡述模式, default 為 YES
++ (void)simpleMode:(BOOL)simpleMode;
+
 @end
