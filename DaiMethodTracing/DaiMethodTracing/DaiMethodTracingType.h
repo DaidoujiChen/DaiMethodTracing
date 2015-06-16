@@ -37,3 +37,5 @@ typedef enum {
 } DaiMethodTracingType;
 
 DaiMethodTracingType tracingType(NSString *type);
+NSString *voidPointerAnalyze(NSString *typeEncoding);
+NSString *objectAnalyze(NSString *typeEncoding);

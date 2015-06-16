@@ -30,8 +30,8 @@ NSInvocation *createInvocation(id self, SEL _cmd, va_list list, NSString *deep)
         
         [argumentLogString appendFormat:@"(StackSymbol %@)> arg%td ", deep, i - 1];
         
-        switch (tracingType([NSString stringWithCString:[invocation.methodSignature getArgumentTypeAtIndex:i]
-                                                encoding:NSUTF8StringEncoding])) {
+        NSString *argumentType = [NSString stringWithCString:[invocation.methodSignature getArgumentTypeAtIndex:i] encoding:NSUTF8StringEncoding];
+        switch (tracingType(argumentType)) {
             case DaiMethodTracingTypeChar:
             {
                 char argument = va_arg(list, int);
@@ -52,7 +52,7 @@ NSInvocation *createInvocation(id self, SEL _cmd, va_list list, NSString *deep)
             {
                 short argument = va_arg(list, int);
                 [invocation setArgument:&argument atIndex:i];
-                [argumentLogString appendFormat:@"(shot) %i", argument];
+                [argumentLogString appendFormat:@"(short) %i", argument];
                 break;
             }
                 
@@ -138,9 +138,9 @@ NSInvocation *createInvocation(id self, SEL _cmd, va_list list, NSString *deep)
                 
             case DaiMethodTracingTypeVoidPointer:
             {
-                char *argument = va_arg(list, void *);
+                void *argument = va_arg(list, void *);
                 [invocation setArgument:&argument atIndex:i];
-                [argumentLogString appendFormat:@"(void*) %s", argument];
+                [argumentLogString appendFormat:@"(%@) %s", voidPointerAnalyze(argumentType), argument];
                 break;
             }
                 
@@ -159,7 +159,7 @@ NSInvocation *createInvocation(id self, SEL _cmd, va_list list, NSString *deep)
                     argument = [DaiSugarCoating wrapBlock:argument];
                 }
                 [invocation setArgument:&argument atIndex:i];
-                [argumentLogString appendFormat:@"(id) %@", argument];
+                [argumentLogString appendFormat:@"(%@) %@", objectAnalyze(argumentType), argument];
                 break;
             }
                 
@@ -304,7 +304,7 @@ NSString *methodFace(id self, SEL _cmd)
             break;
             
         case DaiMethodTracingTypeVoidPointer:
-            [methodFacesString appendString:@"(void *)"];
+            [methodFacesString appendFormat:@"(%@)", voidPointerAnalyze(returnType)];
             break;
             
         case DaiMethodTracingTypeCharPointer:
@@ -312,7 +312,7 @@ NSString *methodFace(id self, SEL _cmd)
             break;
             
         case DaiMethodTracingTypeObject:
-            [methodFacesString appendString:@"(id)"];
+            [methodFacesString appendFormat:@"(%@)", objectAnalyze(returnType)];
             break;
             
         case DaiMethodTracingTypeClass:
@@ -359,8 +359,8 @@ NSString *methodFace(id self, SEL _cmd)
         NSUInteger argumentIndex = i + 2;
         if (argumentIndex < signature.numberOfArguments) {
             [methodFacesString appendString:@":"];
-            NSString *argType = [NSString stringWithFormat:@"%s", [signature getArgumentTypeAtIndex:argumentIndex]];
-            switch (tracingType(argType)) {
+            NSString *argumentType = [NSString stringWithFormat:@"%s", [signature getArgumentTypeAtIndex:argumentIndex]];
+            switch (tracingType(argumentType)) {
                 case DaiMethodTracingTypeChar:
                     [methodFacesString appendString:@"(char) "];
                     break;
@@ -414,7 +414,7 @@ NSString *methodFace(id self, SEL _cmd)
                     break;
                     
                 case DaiMethodTracingTypeVoidPointer:
-                    [methodFacesString appendString:@"(void *)"];
+                    [methodFacesString appendFormat:@"(%@)", voidPointerAnalyze(argumentType)];
                     break;
                     
                 case DaiMethodTracingTypeCharPointer:
@@ -422,7 +422,7 @@ NSString *methodFace(id self, SEL _cmd)
                     break;
                     
                 case DaiMethodTracingTypeObject:
-                    [methodFacesString appendString:@"(id) "];
+                    [methodFacesString appendFormat:@"(%@) ", objectAnalyze(argumentType)];
                     break;
                     
                 case DaiMethodTracingTypeClass:
@@ -807,6 +807,30 @@ void voidMethodIMP(id self, SEL _cmd, ...)
     NSLog(@"(StackSymbol %@)> finish %@ at %@, use %fs", deep, self, methodFace(self, _cmd), [[NSDate date] timeIntervalSince1970] - startTime);
 }
 
+void *voidPointerMethodIMP(id self, SEL _cmd, ...)
+{
+    NSString *deep = stackSymbol();
+    NSLog(@"(StackSymbol %@)> start %@ at %@", deep, self, methodFace(self, _cmd));
+    
+    // 建立 invocation, 並填入變數
+    va_list list;
+    va_start(list, _cmd);
+    NSInvocation *invocation = createInvocation(self, _cmd, list, deep);
+    va_end(list);
+    
+    // 運行
+    NSTimeInterval startTime = [[NSDate date] timeIntervalSince1970];
+    [invocation invoke];
+    
+    // 處理回傳值
+    void *returnValue;
+    [invocation getReturnValue:&returnValue];
+    NSLog(@"(StackSymbol %@)> return %s", deep, returnValue);
+    
+    NSLog(@"(StackSymbol %@)> finish %@ at %@, use %fs", deep, self, methodFace(self, _cmd), [[NSDate date] timeIntervalSince1970] - startTime);
+    return returnValue;
+}
+
 char *charPointerMethodIMP(id self, SEL _cmd, ...)
 {
     NSString *deep = stackSymbol();
@@ -831,7 +855,7 @@ char *charPointerMethodIMP(id self, SEL _cmd, ...)
     return returnValue;
 }
 
-id idMethodIMP(id self, SEL _cmd, ...)
+id objectMethodIMP(id self, SEL _cmd, ...)
 {
     NSString *deep = stackSymbol();
     NSLog(@"(StackSymbol %@)> start %@ at %@", deep, self, methodFace(self, _cmd));
@@ -879,7 +903,7 @@ Class classMethodIMP(id self, SEL _cmd, ...)
     return returnValue;
 }
 
-SEL selMethodIMP(id self, SEL _cmd, ...)
+SEL selectorMethodIMP(id self, SEL _cmd, ...)
 {
     NSString *deep = stackSymbol();
     NSLog(@"(StackSymbol %@)> start %@ at %@", deep, self, methodFace(self, _cmd));

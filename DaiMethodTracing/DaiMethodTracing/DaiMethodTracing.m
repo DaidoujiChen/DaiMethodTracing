@@ -118,13 +118,17 @@
 			case DaiMethodTracingTypeVoid:
                 class_addMethod(targetClass, swizzlingMethodSelector, (IMP)voidMethodIMP, typeEncoding);
 				break;
+            
+            case DaiMethodTracingTypeVoidPointer:
+                class_addMethod(targetClass, swizzlingMethodSelector, (IMP)voidPointerMethodIMP, typeEncoding);
+                break;
                 
 			case DaiMethodTracingTypeCharPointer:
                 class_addMethod(targetClass, swizzlingMethodSelector, (IMP)charPointerMethodIMP, typeEncoding);
 				break;
                 
 			case DaiMethodTracingTypeObject:
-                class_addMethod(targetClass, swizzlingMethodSelector, (IMP)idMethodIMP, typeEncoding);
+                class_addMethod(targetClass, swizzlingMethodSelector, (IMP)objectMethodIMP, typeEncoding);
 				break;
                 
 			case DaiMethodTracingTypeClass:
@@ -132,7 +136,7 @@
 				break;
                 
 			case DaiMethodTracingTypeSelector:
-                class_addMethod(targetClass, swizzlingMethodSelector, (IMP)selMethodIMP, typeEncoding);
+                class_addMethod(targetClass, swizzlingMethodSelector, (IMP)selectorMethodIMP, typeEncoding);
 				break;
                 
 			case DaiMethodTracingTypeCGRect:

@@ -21,10 +21,11 @@ float floatMethodIMP(id self, SEL _cmd, ...);
 double doubleMethodIMP(id self, SEL _cmd, ...);
 BOOL boolMethodIMP(id self, SEL _cmd, ...);
 void voidMethodIMP(id self, SEL _cmd, ...);
+void *voidPointerMethodIMP(id self, SEL _cmd, ...);
 char *charPointerMethodIMP(id self, SEL _cmd, ...);
-id idMethodIMP(id self, SEL _cmd, ...);
+id objectMethodIMP(id self, SEL _cmd, ...);
 Class classMethodIMP(id self, SEL _cmd, ...);
-SEL selMethodIMP(id self, SEL _cmd, ...);
+SEL selectorMethodIMP(id self, SEL _cmd, ...);
 
 CGRect cgRectMethodIMP(id self, SEL _cmd, ...);
 CGPoint cgPointMethodIMP(id self, SEL _cmd, ...);

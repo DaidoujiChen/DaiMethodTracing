@@ -212,7 +212,7 @@ enum {
             break;
             
         case DaiMethodTracingTypeVoidPointer:
-            [blockFacesString appendString:@"void*"];
+            [blockFacesString appendFormat:@"%@", voidPointerAnalyze(returnType)];
             break;
             
         case DaiMethodTracingTypeCharPointer:
@@ -220,7 +220,7 @@ enum {
             break;
             
         case DaiMethodTracingTypeObject:
-            [blockFacesString appendString:@"id"];
+            [blockFacesString appendFormat:@"%@", objectAnalyze(returnType)];
             break;
             
         case DaiMethodTracingTypeClass:
@@ -263,112 +263,112 @@ enum {
     [blockFacesString appendString:@"("];
     
     // 各參數型別
-    NSMutableArray *argTypes = [NSMutableArray array];
+    NSMutableArray *argumentTypes = [NSMutableArray array];
     for (unsigned i = 1; i < signature.numberOfArguments; i++) {
-        NSString *argType = [NSString stringWithFormat:@"%s", [signature getArgumentTypeAtIndex:i]];
-        switch (tracingType(argType)) {
+        NSString *argumentType = [NSString stringWithFormat:@"%s", [signature getArgumentTypeAtIndex:i]];
+        switch (tracingType(argumentType)) {
             case DaiMethodTracingTypeChar:
-                [argTypes addObject:@"char"];
+                [argumentTypes addObject:@"char"];
                 break;
                 
             case DaiMethodTracingTypeInt:
-                [argTypes addObject:@"int"];
+                [argumentTypes addObject:@"int"];
                 break;
                 
             case DaiMethodTracingTypeShort:
-                [argTypes addObject:@"short"];
+                [argumentTypes addObject:@"short"];
                 break;
                 
             case DaiMethodTracingTypeLong:
-                [argTypes addObject:@"long"];
+                [argumentTypes addObject:@"long"];
                 break;
                 
             case DaiMethodTracingTypeLongLong:
-                [argTypes addObject:@"long long"];
+                [argumentTypes addObject:@"long long"];
                 break;
                 
             case DaiMethodTracingTypeUnsignedChar:
-                [argTypes addObject:@"unsigened char"];
+                [argumentTypes addObject:@"unsigened char"];
                 break;
                 
             case DaiMethodTracingTypeUnsignedInt:
-                [argTypes addObject:@"unsigened int"];
+                [argumentTypes addObject:@"unsigened int"];
                 break;
                 
             case DaiMethodTracingTypeUnsignedShort:
-                [argTypes addObject:@"unsigened short"];
+                [argumentTypes addObject:@"unsigened short"];
                 break;
                 
             case DaiMethodTracingTypeUnsignedLong:
-                [argTypes addObject:@"unsigened long"];
+                [argumentTypes addObject:@"unsigened long"];
                 break;
                 
             case DaiMethodTracingTypeUnsignedLongLong:
-                [argTypes addObject:@"unsigened long long"];
+                [argumentTypes addObject:@"unsigened long long"];
                 break;
                 
             case DaiMethodTracingTypeFloat:
-                [argTypes addObject:@"float"];
+                [argumentTypes addObject:@"float"];
                 break;
                 
             case DaiMethodTracingTypeDouble:
-                [argTypes addObject:@"double"];
+                [argumentTypes addObject:@"double"];
                 break;
                 
             case DaiMethodTracingTypeBool:
-                [argTypes addObject:@"BOOL"];
+                [argumentTypes addObject:@"BOOL"];
                 break;
                 
             case DaiMethodTracingTypeVoidPointer:
-                [argTypes addObject:@"void*"];
+                [argumentTypes addObject:voidPointerAnalyze(argumentType)];
                 break;
                 
             case DaiMethodTracingTypeCharPointer:
-                [argTypes addObject:@"char*"];
+                [argumentTypes addObject:@"char *"];
                 break;
                 
             case DaiMethodTracingTypeObject:
-                [argTypes addObject:@"id"];
+                [argumentTypes addObject:objectAnalyze(argumentType)];
                 break;
                 
             case DaiMethodTracingTypeClass:
-                [argTypes addObject:@"Class"];
+                [argumentTypes addObject:@"Class"];
                 break;
                 
             case DaiMethodTracingTypeSelector:
-                [argTypes addObject:@"SEL"];
+                [argumentTypes addObject:@"SEL"];
                 break;
                 
             case DaiMethodTracingTypeCGRect:
-                [argTypes addObject:@"CGRect"];
+                [argumentTypes addObject:@"CGRect"];
                 break;
                 
             case DaiMethodTracingTypeCGPoint:
-                [argTypes addObject:@"CGPoint"];
+                [argumentTypes addObject:@"CGPoint"];
                 break;
                 
             case DaiMethodTracingTypeCGSize:
-                [argTypes addObject:@"CGSize"];
+                [argumentTypes addObject:@"CGSize"];
                 break;
                 
             case DaiMethodTracingTypeCGAffineTransform:
-                [argTypes addObject:@"CGAffineTransform"];
+                [argumentTypes addObject:@"CGAffineTransform"];
                 break;
                 
             case DaiMethodTracingTypeUIEdgeInsets:
-                [argTypes addObject:@"UIEdgeInsets"];
+                [argumentTypes addObject:@"UIEdgeInsets"];
                 break;
                 
             case DaiMethodTracingTypeUIOffset:
-                [argTypes addObject:@"UIOffset"];
+                [argumentTypes addObject:@"UIOffset"];
                 break;
                 
             default:
-                [argTypes addObject:@"void"];
+                [argumentTypes addObject:@"void"];
                 break;
         }
     }
-    [blockFacesString appendFormat:@"%@", [argTypes componentsJoinedByString:@", "]];
+    [blockFacesString appendFormat:@"%@", [argumentTypes componentsJoinedByString:@", "]];
     [blockFacesString appendString:@")"];
     return blockFacesString;
 }
@@ -419,7 +419,7 @@ enum {
                 {
                     short argument;
                     [invocation getArgument:&argument atIndex:i];
-                    [argumentLogString appendFormat:@"(shot) %i", argument];
+                    [argumentLogString appendFormat:@"(short) %i", argument];
                     break;
                 }
                     
@@ -505,9 +505,9 @@ enum {
                     
                 case DaiMethodTracingTypeVoidPointer:
                 {
-                    char *argument;
+                    void *argument;
                     [invocation getArgument:&argument atIndex:i];
-                    [argumentLogString appendFormat:@"(void*) %s", argument];
+                    [argumentLogString appendFormat:@"(%@) %s", voidPointerAnalyze(argumentType), argument];
                     break;
                 }
                     
@@ -515,7 +515,7 @@ enum {
                 {
                     char *argument;
                     [invocation getArgument:&argument atIndex:i];
-                    [argumentLogString appendFormat:@"(char*) %s", argument];
+                    [argumentLogString appendFormat:@"(char *) %s", argument];
                     break;
                 }
                     
@@ -527,7 +527,7 @@ enum {
                         argument = [DaiSugarCoating wrapBlock:argument];
                         [invocation setArgument:&argument atIndex:i];
                     }
-                    [argumentLogString appendFormat:@"(id) %@", argument];
+                    [argumentLogString appendFormat:@"(%@) %@", objectAnalyze(argumentType), argument];
                     break;
                 }
                     
@@ -631,7 +631,7 @@ enum {
             {
                 short argument;
                 [invocation getReturnValue:&argument];
-                [returnLogString appendFormat:@"(shot) %i", argument];
+                [returnLogString appendFormat:@"(short) %i", argument];
                 break;
             }
                 
@@ -717,9 +717,9 @@ enum {
                 
             case DaiMethodTracingTypeVoidPointer:
             {
-                char *argument;
+                void *argument;
                 [invocation getReturnValue:&argument];
-                [returnLogString appendFormat:@"(void*) %s", argument];
+                [returnLogString appendFormat:@"(%@) %s", voidPointerAnalyze(returnType), argument];
                 break;
             }
                 
@@ -727,7 +727,7 @@ enum {
             {
                 char *argument;
                 [invocation getReturnValue:&argument];
-                [returnLogString appendFormat:@"(char*) %s", argument];
+                [returnLogString appendFormat:@"(char *) %s", argument];
                 break;
             }
                 
@@ -735,7 +735,7 @@ enum {
             {
                 id argument;
                 [invocation getReturnValue:&argument];
-                [returnLogString appendFormat:@"(id) %@", argument];
+                [returnLogString appendFormat:@"(%@) %@", objectAnalyze(returnType), argument];
                 break;
             }
                 

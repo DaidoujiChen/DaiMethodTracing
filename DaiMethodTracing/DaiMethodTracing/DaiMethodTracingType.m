@@ -68,3 +68,82 @@ DaiMethodTracingType tracingType(NSString *type)
     
     return -1;
 }
+
+NSString *voidPointerAnalyze(NSString *typeEncoding)
+{
+    if (typeEncoding.length > 1) {
+        switch (tracingType([typeEncoding substringWithRange:NSMakeRange(1, 1)])) {
+            case DaiMethodTracingTypeChar:
+                return @"char *";
+                
+            case DaiMethodTracingTypeInt:
+                return @"int *";
+                
+            case DaiMethodTracingTypeShort:
+                return @"short *";
+                
+            case DaiMethodTracingTypeLong:
+                return @"long *";
+                
+            case DaiMethodTracingTypeLongLong:
+                return @"long long*";
+                
+            case DaiMethodTracingTypeUnsignedChar:
+                return @"unsigened char *";
+                
+            case DaiMethodTracingTypeUnsignedInt:
+                return @"unsigened int *";
+                
+            case DaiMethodTracingTypeUnsignedShort:
+                return @"unsigened short *";
+                
+            case DaiMethodTracingTypeUnsignedLong:
+                return @"unsigened long *";
+                
+            case DaiMethodTracingTypeUnsignedLongLong:
+                return @"unsigened long long *";
+                
+            case DaiMethodTracingTypeFloat:
+                return @"float *";
+                
+            case DaiMethodTracingTypeDouble:
+                return @"double *";
+                
+            case DaiMethodTracingTypeBool:
+                return @"BOOL *";
+                
+            case DaiMethodTracingTypeCGRect:
+                return @"CGRect *";
+                
+            case DaiMethodTracingTypeCGPoint:
+                return @"CGPoint *";
+                
+            case DaiMethodTracingTypeCGSize:
+                return @"CGSize *";
+                
+            case DaiMethodTracingTypeCGAffineTransform:
+                return @"CGAffineTransform *";
+                
+            case DaiMethodTracingTypeUIEdgeInsets:
+                return @"UIEdgeInsets *";
+                
+            case DaiMethodTracingTypeUIOffset:
+                return @"UIOffset *";
+                
+            default:
+                return @"void *";
+        }
+    }
+    return @"void *";
+}
+
+NSString *objectAnalyze(NSString *typeEncoding)
+{
+    NSString *classString = [typeEncoding substringFromIndex:1];
+    NSArray *splits = [classString componentsSeparatedByString:@"\""];
+    if (splits.count == 3) {
+        return [NSString stringWithFormat:@"%@ *", splits[1]];
+    } else {
+        return @"id";
+    }
+}
