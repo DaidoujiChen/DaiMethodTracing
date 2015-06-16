@@ -375,7 +375,8 @@ enum {
 
 #pragma mark - private class method
 
-+ (NSMutableDictionary *)aliveMapping {
++ (NSMutableDictionary *)aliveMapping
+{
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         objc_setAssociatedObject(self, _cmd, [NSMutableDictionary dictionary], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
