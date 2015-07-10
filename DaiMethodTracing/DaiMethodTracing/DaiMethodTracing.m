@@ -60,7 +60,7 @@
 	Method *methodList = class_copyMethodList(targetClass, &methodCount);
     
 	for (unsigned int i = 0; i < methodCount; i++) {
-		char dst[dstLength];
+        char dst[dstLength];
 		method_getReturnType(methodList[i], dst, dstLength);
         
         // do not swizzling some method
@@ -69,7 +69,7 @@
         }
         
         // prepare required arguments
-		DaiMethodTracingType returnType = tracingType([NSString stringWithCString:dst encoding:NSUTF8StringEncoding]);
+		DaiMethodTracingType returnType = tracingType([NSString stringWithFormat:@"%s", dst]);
 		NSString *swizzlingMethodName = [NSString stringWithFormat:@"%@%@", swizzlingPrefix, NSStringFromSelector(method_getName(methodList[i]))];
         SEL swizzlingMethodSelector = NSSelectorFromString(swizzlingMethodName);
         const char *typeEncoding = method_getTypeEncoding(methodList[i]);
