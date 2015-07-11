@@ -227,7 +227,7 @@
 + (BOOL)isNeedAvoid:(NSString *)methodName {
     static NSArray *avoids = nil;
     if (!avoids) {
-        avoids = @[@"dealloc", @"retain", @"release", @"Retain"];
+        avoids = @[@"dealloc", @"retain", @"release", @"Retain", @"description"];
     }
     
     for (NSString *avoid in avoids) {
