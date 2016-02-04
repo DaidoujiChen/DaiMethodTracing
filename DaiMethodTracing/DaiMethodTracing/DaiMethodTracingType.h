@@ -6,6 +6,8 @@
 //  Copyright (c) 2015年 ChilunChen. All rights reserved.
 //
 
+#import <UIKit/UIKit.h>
+
 typedef enum {
     DaiMethodTracingTypeChar,
     DaiMethodTracingTypeInt,

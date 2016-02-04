@@ -6,6 +6,8 @@
 //  Copyright (c) 2015年 ChilunChen. All rights reserved.
 //
 
+#import <UIKit/UIKit.h>
+
 char charMethodIMP(id self, SEL _cmd, ...);
 int intMethodIMP(id self, SEL _cmd, ...);
 short shortMethodIMP(id self, SEL _cmd, ...);
