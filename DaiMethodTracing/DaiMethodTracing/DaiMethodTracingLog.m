@@ -24,8 +24,11 @@
     
     switch (logType) {
         case DaiMethodTracingLogStart:
-            printf("\n%s%s\n", [emptyString UTF8String], [log UTF8String]);
+        {
+            NSString *threadNumber = [NSString stringWithFormat:@"%td", [[[NSThread currentThread] valueForKeyPath:@"private.seqNum"] integerValue]];
+            printf("\n%s(thread:%s) %s\n", [emptyString UTF8String], [threadNumber UTF8String], [log UTF8String]);
             break;
+        }
         case DaiMethodTracingLogArgument:
             printf("%s  ⥤ %s\n", [emptyString UTF8String], [log UTF8String]);
             break;
